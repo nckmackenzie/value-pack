@@ -15,4 +15,20 @@
   .more-btn {
     @apply outline-none border-none cursor-pointer;
   }
+
+  .custom-success {
+    @apply bg-teal-100 text-teal-950;
+  }
+
+  .btn {
+    @apply inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-white transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-400 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50;
+  }
+
+  .btn-default {
+    @apply bg-blue-300 text-blue-950 hover:bg-blue-300/90 h-10 px-4 py-2;
+  }
+
+  .btn-sm {
+    @apply h-9 rounded-md px-3;
+  }
 }
