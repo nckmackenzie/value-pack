@@ -1,4 +1,9 @@
 <?php
+
+function redirect($page){
+    header('location: ' . URLROOT . '/' . $page);
+}
+
 function resultset($con,$sql,$arr){
     $stmt = $con->prepare($sql);
     $stmt->execute($arr);
