@@ -19,5 +19,5 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-multiselect/1.1.2/css/bootstrap-multiselect.min.css">
     <link rel="stylesheet" href="<?php echo URLROOT; ?>/css/styles.css">
 </head>
-<body>
+<body class="hold-transition sidebar-mini">
     
