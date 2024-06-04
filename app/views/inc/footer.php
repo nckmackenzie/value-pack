@@ -28,6 +28,7 @@
 <script src="<?php echo URLROOT;?>/plugins/CustomDate/dist/DateTimePicker.min.js"></script>
 <script src="<?php echo URLROOT;?>/plugins/bs-multiselect/dist/js/bootstrap-select.min.js"></script>
 <script src="<?php echo URLROOT; ?>/js/adminlte.min.js"></script>
+<script src="<?php echo URLROOT; ?>/js/main.js"></script>
 <script src="https://unpkg.com/lucide@latest"></script>
   <script>
     lucide.createIcons();
