@@ -1,7 +1,26 @@
 <?php
-
+declare(strict_types=1);
 function redirect($page){
     header('location: ' . URLROOT . '/' . $page);
+}
+
+function invalid_setter($field):string
+{
+    return !empty($field) ? 'is-invalid' : '';
+}
+
+function alert_type($type):string{
+    switch ($type) {
+        case 'success':
+            return 'alert custom-success alert-dismissible fade show';
+            // break;
+        case 'error':
+            return 'alert custom-destructive alert-dismissible fade show';
+            // break;
+        default:
+            return 'alert custom-warning alert-dismissible fade show';
+            // break;
+    }
 }
 
 function resultset($con,$sql,$arr){
