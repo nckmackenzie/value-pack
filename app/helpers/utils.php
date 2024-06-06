@@ -23,6 +23,15 @@ function alert_type($type):string{
     }
 }
 
+function selectdCheck($value1,$value2){
+    if ($value1 == $value2){
+      echo 'selected="selected"';
+     } else {
+       echo '';
+     }
+     return;
+}
+
 function resultset($con,$sql,$arr){
     $stmt = $con->prepare($sql);
     $stmt->execute($arr);
