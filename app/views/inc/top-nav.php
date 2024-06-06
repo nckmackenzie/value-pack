@@ -2,9 +2,9 @@
     <nav class="main-header navbar navbar-expand navbar-dark navbar-navy text-sm">
         <ul class="navbar-nav">
           <li class="nav-item">
-            <a class="nav-link" data-widget="pushmenu" href="#" role="button"
+            <button class="nav-link" data-widget="pushmenu" href="#" role="button"
               ><i class="fas fa-bars"></i
-            ></a>
+            ></button>
           </li>
         </ul>
         <div class="relative ml-auto">
