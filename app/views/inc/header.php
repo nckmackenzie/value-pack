@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="shortcut icon" href="<?php echo URLROOT;?>/img/drop.png" type="image/x-icon">
-    <title><?php echo SITENAME; ?></title>
+    <title><?php echo isset($data['title']) ? $data['title'] . ' / ' . SITENAME : SITENAME; ?></title>
     <link rel="shortcut icon" href="<?php echo URLROOT;?>/img/cropped-logo.png" type="image/x-icon">
     <link rel="stylesheet" href="<?php echo URLROOT;?>/plugins/fontawesome-free/css/all.min.css" />
     <link rel="stylesheet" href="<?php echo URLROOT;?>/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css">
