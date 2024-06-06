@@ -8,6 +8,10 @@
     @apply font-sans;
   }
 
+  label {
+    @apply text-sm font-bold leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 text-slate-600;
+  }
+
   .icon {
     @apply w-4 h-4;
   }
@@ -24,20 +28,28 @@
     @apply bg-teal-100 text-teal-950;
   }
 
+  .custom-destructive {
+    @apply bg-rose-100 text-rose-950;
+  }
+
+  .custom-warning {
+    @apply bg-amber-100 text-amber-950;
+  }
+
   .btn {
     @apply inline-flex items-center justify-center h-10 px-4 py-2 whitespace-nowrap rounded-md text-sm font-medium ring-offset-white transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-400 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50;
   }
 
   .btn-default {
-    @apply bg-blue-300 text-blue-950 hover:bg-blue-300/90;
+    @apply bg-blue-700 text-blue-100 hover:bg-blue-700/90;
   }
 
   .btn-success {
-    @apply bg-teal-300 text-teal-950 hover:bg-teal-300/90  ;
+    @apply bg-teal-300 text-teal-950 hover:bg-teal-300/90;
   }
 
   .btn-outline {
-    @apply border border-input bg-slate-50 hover:bg-muted hover:text-slate-400';
+    @apply border border-blue-300 bg-slate-50 hover:bg-muted hover:text-slate-400;
   }
 
   .btn-sm {
