@@ -4,6 +4,13 @@
  * Loads the model and views
  */
 class Controller {
+    public function __construct() {
+        if (!$this->should_skip_authentication()) {
+            $this->is_authenticate();
+        }
+    }
+
+
     public function model($model)
     {
         //require model file
@@ -11,6 +18,17 @@ class Controller {
 
         #new instance of model
         return new $model;
+    }
+
+    protected function is_authenticate() {
+        if (!isset($_SESSION['user_id'])) {
+            redirect('auth/login');
+            exit();
+        }
+    }
+
+    protected function should_skip_authentication() {
+        return false;
     }
 
     //load view
