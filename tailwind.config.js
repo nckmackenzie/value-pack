@@ -1,7 +1,11 @@
 module.exports = {
   content: ['./*.php', './app/views/**/*.php'],
   theme: {
-    extend: {},
+    extend: {
+      height: {
+        dvh: '100dvh',
+      },
+    },
     fontFamily: {
       sans: ['Inter', 'sans-serif'],
     },
