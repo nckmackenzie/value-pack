@@ -1,5 +1,7 @@
 <?php
 declare(strict_types=1);
+require APPROOT . '/vendor/autoload.php';
+
 function redirect($page){
     header('location: ' . URLROOT . '/' . $page);
 }
@@ -36,6 +38,11 @@ function resultset($con,$sql,$arr){
     $stmt = $con->prepare($sql);
     $stmt->execute($arr);
     return $stmt->fetchAll(PDO::FETCH_OBJ);
+}
+
+function cuid(){
+    $cuid = new EndyJasmi\Cuid;
+    return $cuid->slug(); 
 }
 
 function singleset($con,$sql,$arr){
