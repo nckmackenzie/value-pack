@@ -2,3 +2,4 @@ node_modules
 app/config
 public/.htaccess
 public/plugins
+vendor
