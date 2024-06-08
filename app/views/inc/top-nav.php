@@ -19,7 +19,7 @@
                 </a>
               </li>
               <li class="px-4 py-2 text-sm text-gray-700 cursor-pointer hover:bg-gray-100 group">
-                <a href="" class="flex items-center gap-2">
+                <a href="<?php echo URLROOT;?>/auth/logout" class="flex items-center gap-2">
                   <i data-lucide="log-out" class="size-4 text-slate-400 transition-colors group-hover:text-blue-400"></i>
                   <span class="transition-colors group-hover:text-blue-400">Logout</span>
                 </a>
