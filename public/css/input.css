@@ -49,7 +49,7 @@
   }
 
   .btn-info {
-    @apply bg-sky-100 text-slate-950 transition-colors hover:bg-sky-50 hover:text-slate-800;
+    @apply bg-sky-100 text-slate-950 transition-colors hover:bg-sky-50 hover:text-slate-800 focus:bg-sky-50 focus:text-slate-800;
   }
 
   .btn-outline {
@@ -64,11 +64,24 @@
     @apply flex items-center gap-2;
   }
 
-  .table-cm {
-    @apply w-full border border-slate-400 overflow-hidden rounded-md bg-transparent;
+  .table-container {
+    @apply relative overflow-x-auto shadow-md sm:rounded-lg;
   }
 
-  .table-cm thead {
-    @apply bg-slate-200 p-4 border-y border-b-slate-400;
+  .table-container table {
+    @apply w-full text-sm text-left rtl:text-right text-gray-500;
+  }
+
+  .table-container table thead {
+    @apply text-xs text-gray-700 uppercase bg-gray-50;
+  }
+
+  .table-container table th,
+  .table-container table td {
+    @apply px-6 py-3;
+  }
+
+  .table-container table tbody tr {
+    @apply bg-white border-b  hover:bg-gray-50;
   }
 }
