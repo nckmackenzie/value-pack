@@ -3,6 +3,7 @@
 require_once 'config/config.php';
 require_once 'helpers/session_handler.php';
 require_once 'helpers/utils.php';
+require_once 'helpers//components.php';
 //load Libraries
 // require_once 'libraries/Core.php';
 // require_once 'libraries/Controller.php';
