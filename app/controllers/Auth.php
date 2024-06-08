@@ -106,4 +106,16 @@ class Auth extends Publicontroller
         $_SESSION['is_admin'] = $user->role_id < 3;
         redirect('dashboard');
     }
+
+    public function logout()
+    {
+        unset($_SESSION['user_id']);
+        unset($_SESSION['user_name']);
+        unset($_SESSION['role']);
+        unset($_SESSION['store']);
+        unset($_SESSION['is_main']);
+        unset($_SESSION['is_admin']);
+        session_destroy();
+        redirect('auth/login');
+    }
 }
