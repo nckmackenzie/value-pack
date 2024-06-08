@@ -148,3 +148,25 @@ function getmodulemenuitems($con,$userid,$module)
     $stmt->execute();
     return $stmt->fetchAll(PDO::FETCH_OBJ);
 }
+
+function check_role_rights($con,$role,$form){
+    $stmt = $con->prepare('SELECT COUNT(*) 
+                           FROM forms f
+                           INNER JOIN role_rights r on r.form_id = f.id
+                           WHERE (role_id = ?) AND (form_name = ?)');
+    $stmt->execute([$role,$form]);
+    $count = (int)$stmt->fetchColumn();
+    if($count === 0){
+        return false;
+    }else{
+        return true;
+    }
+}
+
+function check_rights($model,$form){
+    if(isset($_SESSION['role']) && (int)$_SESSION['role'] > 2  && !$model->check_rights($form)){
+        var_dump($_SESSION['role']);
+        redirect('auth/forbidden');
+        exit;
+    }
+}

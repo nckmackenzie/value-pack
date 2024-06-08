@@ -16,4 +16,9 @@ class Auths
     public function get_user($userid){
         return singleset($this->db->dbh,'SELECT * FROM users WHERE contact=?',[$userid]);
     }
+
+    public function check_rights($form)
+    {
+        return check_role_rights($this->db->dbh,$_SESSION['role'],$form);
+    }
 }
