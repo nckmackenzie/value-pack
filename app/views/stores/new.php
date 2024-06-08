@@ -10,9 +10,9 @@
           </div>
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
-              <li class="breadcrumb-item">Admin</li>
-              <li class="breadcrumb-item"><a href="<?php echo URLROOT;?>/stores">Stores</a></li>
-              <li class="breadcrumb-item active"><?php echo $data['title'];?></li>
+              <li class="breadcrumb-item text-sm">Admin</li>
+              <li class="breadcrumb-item text-sm"><a href="<?php echo URLROOT;?>/stores">Stores</a></li>
+              <li class="breadcrumb-item text-sm active"><?php echo $data['title'];?></li>
             </ol>
           </div>
         </div>
