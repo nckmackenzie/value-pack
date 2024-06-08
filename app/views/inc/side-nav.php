@@ -1,10 +1,10 @@
 <?php
     $con = new Database;
     // $menuitems = getusermenuitems($con->dbh,(int)$_SESSION['userId']);
-    $menuitems = getusermenuitems($con->dbh,'6503a5k0');
+    $menuitems = getusermenuitems($con->dbh,$_SESSION['user_id']);
     $menuicons = [
         'admin' => 'shield-check',
-        'transactions' => 'sliders-horizontal',
+        'transactions' => 'workflow',
         'reports' => 'file-text',
     ];
 ?>
@@ -28,7 +28,7 @@
                         </a>
                         <ul class="nav nav-treeview custom-font">
                             <!-- $navitems = getmodulemenuitems($con->dbh,(int)$_SESSION['userId'],$menuitem)  -->
-                            <?php $navitems = getmodulemenuitems($con->dbh,'6503a5k0',$menuitem) ;?>
+                            <?php $navitems = getmodulemenuitems($con->dbh,$_SESSION['user_id'],$menuitem) ;?>
                             <?php foreach($navitems as $navitem) : ?>
                                 <li class="nav-item transition-all hover:bg-gray-200/50 pl-4">
                                     <a href="<?php echo URLROOT;?>/<?php echo $navitem->path;?>" class="nav-link">
