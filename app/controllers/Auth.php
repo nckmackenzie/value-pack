@@ -118,4 +118,9 @@ class Auth extends Publicontroller
         session_destroy();
         redirect('auth/login');
     }
+
+    public function forbidden()
+    {
+        $this->view('auth/forbidden',['title' => 'Forbidden!']);
+    }
 }
