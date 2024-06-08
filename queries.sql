@@ -1,0 +1,3 @@
+CREATE TABLE `user_stores` (`user_id` VARCHAR(100) NOT NULL , `store_id` VARCHAR(100) NOT NULL,CONSTRAINT user_store_pk PRIMARY KEY (user_id, store_id) ) ENGINE = InnoDB;
+
+ALTER TABLE `user_stores` ADD CONSTRAINT `fk_user_stores_userid` FOREIGN KEY (`user_id`) REFERENCES `users`(`id`) ON DELETE RESTRICT ON UPDATE RESTRICT; ALTER TABLE `user_stores` ADD CONSTRAINT `fk_user_stores_storeid` FOREIGN KEY (`store_id`) REFERENCES `stores`(`ID`) ON DELETE RESTRICT ON UPDATE RESTRICT;
