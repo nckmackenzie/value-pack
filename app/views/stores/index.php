@@ -17,34 +17,43 @@
         </div>
       </div>
     </section>
+    <?php DeleteModal(URLROOT .'/stores/delete','deleteModal','Are your you want to delete this store?','id'); ?>
     <section class="content space-y-6">
         <a href="<?php echo URLROOT;?>/stores/new" class="btn btn-info"><i data-lucide="plus" class="icon mr-1.5 text-slate-600">
             </i><span>Create New Store</span>
         </a>
-        <div class="row">
-          <div class="col-12 table-responsive">
-            <table class="table-cm table-stripped table-sm">
-              <thead>
-                <tr>
-                  <th>Store Name</th>
-                  <th>Status</th>
-                  <th></th>
+        <!-- <div class="table-container"> -->
+          <table class="table-cm table-responsive" id="storesDatatable">
+            <thead class="">
+              <tr>
+                <th scope="col" class="">
+                    Store Name
+                </th>
+                <th scope="col" class="">
+                    Status
+                </th>
+                <th scope="col" class="">
+                    Actions
+                </th>
+            </tr>
+            </thead>
+            <tbody>
+              <?php foreach($data['stores'] as $store) : ?>
+                <tr class="">
+                    <td class="capitalize "><?php echo $store->Store_Name;?></td>
+                    <td class=""><div class="capsule <?php echo (bool)$store->Active ? 'capsule-success' : 'capsule-destructive';?>"><?php echo $store->Active ? 'Active' : 'Inactive';?></div></td>
+                    <td class="flex items-center gap-2">
+                      <?php action_buttons("edit","stores",$store->ID);?>
+                      <?php action_buttons("delete","",$store->ID);?>
+                    </td>
                 </tr>
-              </thead>
-              <tbody>
-                <?php foreach($data['stores'] as $store) : ?>
-                  <tr>
-                    <td class="capitalize"><?php echo $store->Store_Name;?></td>
-                    <td><?php echo $store->Active;?></td>
-                    <td></td>
-                  </tr>
-                <?php endforeach;?>
-              </tbody>
-            </table>
-          </div>
-        </div>
+              <?php endforeach;?>
+            </tbody>
+          </table>
+        <!-- </div> -->
     </section><!-- /.content -->
 </div><!-- /.content-wrapper -->
 <?php require APPROOT . '/views/inc/footer.php'?>
+
 </body>
 </html>  
