@@ -42,7 +42,7 @@ function resultset($con,$sql,$arr){
 
 function cuid(){
     $cuid = new EndyJasmi\Cuid;
-    return $cuid->slug(); 
+    return $cuid->cuid(); 
 }
 
 function singleset($con,$sql,$arr){

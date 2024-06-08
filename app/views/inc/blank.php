@@ -1,8 +1,8 @@
 <?php require APPROOT . '/views/inc/header.php';?>
 <?php require APPROOT . '/views/inc/top-nav.php';?>
 <?php require APPROOT . '/views/inc/side-nav.php';?>
-  <div class="content-wrapper">
-    <section class="content-header">
+  <div class="content-wrapper px-4">
+    <section class="content-header px-0">
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
