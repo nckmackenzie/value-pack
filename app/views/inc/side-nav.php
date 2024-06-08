@@ -30,7 +30,7 @@
                             <!-- $navitems = getmodulemenuitems($con->dbh,(int)$_SESSION['userId'],$menuitem)  -->
                             <?php $navitems = getmodulemenuitems($con->dbh,'6503a5k0',$menuitem) ;?>
                             <?php foreach($navitems as $navitem) : ?>
-                                <li class="nav-item transition-all hover:bg-gray-200/50">
+                                <li class="nav-item transition-all hover:bg-gray-200/50 pl-4">
                                     <a href="<?php echo URLROOT;?>/<?php echo $navitem->path;?>" class="nav-link">
                                         <p class="text-xs"><?php echo ucwords($navitem->form_name);?></p>
                                     </a>
