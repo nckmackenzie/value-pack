@@ -41,6 +41,15 @@
                             <span class="invalid-feedback"><?php echo $data['store_name_err'];?></span>
                         </div>
                     </div>
+                    <?php if($data['is_edit']) : ?>
+                      <div class="col-12 flex items-baseline gap-2">
+                        <label class="switch">
+                          <input type="checkbox" value="<?php echo $data['active'] ? 'true' : '';?>" class="switch-input" name="active" <?php echo $data['active'] ? 'checked' : '';?>>
+                          <span class="slider round"></span>
+                        </label>
+                        <div class="text-sm">Active</div>
+                      </div>
+                    <?php endif; ?>
                     <div class="col-12 action-btns">
                        <button type="submit" class="btn btn-default">Save</button>
                        <button type="reset" class="btn btn-outline">Cancel</button>
