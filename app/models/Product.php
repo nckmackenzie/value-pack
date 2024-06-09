@@ -18,6 +18,17 @@ class Product
         return resultset($this->db->dbh,'SELECT * FROM products ORDER BY product_name',[]);
     }
 
+    public function get_product($id){
+        $count = (int)getdbvalue($this->db->dbh,'SELECT COUNT(*) FROM products WHERE id = ?',[$id]);
+        if($count === 0) return false;
+
+        return singleset($this->db->dbh,'SELECT * FROM products WHERE id = ?',[$id]);
+    }
+
+    public function get_product_stores($id){
+        return resultset($this->db->dbh,'SELECT store_id FROM product_stores WHERE product_id = ?',[$id]);
+    }    
+
     public function create_update($data){
         try {
             $this->db->dbh->beginTransaction();
