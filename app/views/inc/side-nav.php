@@ -4,6 +4,7 @@
     $menuitems = getusermenuitems($con->dbh,$_SESSION['user_id']);
     $menuicons = [
         'admin' => 'shield-check',
+        'master entry' => 'cog',
         'transactions' => 'workflow',
         'reports' => 'file-text',
     ];
@@ -21,7 +22,7 @@
                     <li class="nav-item">
                         <a href="#" class="nav-link flex items-center transition-all hover:bg-gray-200/50">
                             <i data-lucide="<?php echo $menuicons[$menuitem];?>" class="size-4 text-gray-400 mr-2"></i>
-                            <p class="capitalize text-sm font-semibold">
+                            <p class="capitalize text-xs font-medium">
                                 <?php echo $menuitem ;?>
                                 <i class="right fas fa-angle-left"></i>
                             </p>
