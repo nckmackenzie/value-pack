@@ -43,4 +43,14 @@ class Controller {
             die('View Doesn\'t Exist');
         }
     }
+
+    public function not_found($path,$message)
+    {
+        $data = [
+            'title' => 'Not found',
+            'path' => $path,
+            'message' => $message
+        ];
+        $this->view('pages/not-found',$data);
+    }
 }
