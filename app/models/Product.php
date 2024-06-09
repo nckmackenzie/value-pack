@@ -14,14 +14,8 @@ class Product
         return (int) getdbvalue($this->db->dbh,$sql,[$item,$id]) > 0;
     }
 
-    function save($data){
-        try {
-            $this->db->dbh->beginTransaction();
-
-        } catch (\Exception $e) {
-            error_log($e->getMessage());
-            return false;
-        }
+    public function get_products(){
+        return resultset($this->db->dbh,'SELECT * FROM products ORDER BY product_name',[]);
     }
 
     public function create_update($data){
