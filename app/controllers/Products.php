@@ -135,6 +135,10 @@ class Products extends Controller
     public function edit($id)
     {        
         $product = $this->productmodel->get_product($id);
+        if(!$product){
+            $this->not_found('/products', 'The product you are trying to edit doesn\'t exist');
+            exit();
+        }
         $data= [
             'units' => $this->reusablemodel->get_units(),
             'stores' => $this->reusablemodel->get_stores(),
