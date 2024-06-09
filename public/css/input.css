@@ -160,4 +160,8 @@
   .slider.round:before {
     border-radius: 50%;
   }
+
+  .mandatory {
+    @apply border-l-2 border-l-rose-300;
+  }
 }
