@@ -16,7 +16,10 @@ class Products extends Controller
 
     function index()
     {
-        $data = ['title' => 'Products','role' => $_SESSION['user_id']];
+        $data = [
+            'title' => 'Products',
+            'products' => $this->productmodel->get_products(),
+        ];
         $this->view('products/index', $data);
     }
 
@@ -59,10 +62,10 @@ class Products extends Controller
         $product_name = filter_input(INPUT_POST,'name', FILTER_SANITIZE_SPECIAL_CHARS);
         $product_code = filter_input(INPUT_POST,'code', FILTER_SANITIZE_SPECIAL_CHARS);
         $unit = filter_input(INPUT_POST,'unit', FILTER_SANITIZE_NUMBER_INT);
-        $buying_price = filter_input(INPUT_POST,'buying_price', FILTER_SANITIZE_NUMBER_FLOAT);
-        $selling_price = filter_input(INPUT_POST,'selling_price', FILTER_SANITIZE_NUMBER_FLOAT);
+        $buying_price = filter_input(INPUT_POST,'buying_price', FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION);
+        $selling_price = filter_input(INPUT_POST,'selling_price', FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION);
         $description = filter_input(INPUT_POST,'description', FILTER_SANITIZE_SPECIAL_CHARS);
-        $restock_level = filter_input(INPUT_POST,'restock_level', FILTER_SANITIZE_NUMBER_INT);
+        $restock_level = filter_input(INPUT_POST,'restock_level', FILTER_SANITIZE_NUMBER_INT, FILTER_FLAG_ALLOW_FRACTION);
         $active = filter_input(INPUT_POST,'active', FILTER_VALIDATE_BOOLEAN);
         $is_edit = filter_input(INPUT_POST, 'is_edit', FILTER_VALIDATE_BOOLEAN);
         $id = filter_input(INPUT_POST, 'id', FILTER_SANITIZE_SPECIAL_CHARS);
@@ -127,6 +130,38 @@ class Products extends Controller
         }
 
         redirect('products');
-        // var_dump($data);
+    }
+
+    public function edit($id)
+    {        
+        $product = $this->productmodel->get_product($id);
+        $data= [
+            'units' => $this->reusablemodel->get_units(),
+            'stores' => $this->reusablemodel->get_stores(),
+            'title' => 'Update product',
+            'id' => $product->id,
+            'is_edit' => true,
+            'name' => strtoupper($product->product_name),
+            'code' => strtoupper($product->product_code),
+            'unit' => $product->unit_id,
+            'buying_price' => $product->buying_price,
+            'selling_price' => $product->selling_price,
+            'description' => $product->description,
+            'restock_level' => $product->reorder_level,
+            'stores_allowed' => [],
+            'allow_nil' => false,
+            'active' => $product->active,
+            'name_err' => '',
+            'code_err' => '',
+            'unit_err' => '',
+            'selling_price_err' => '',
+            'stores_err' => '',
+            'error' => null,
+        ];
+        $stores = $this->productmodel->get_product_stores($id);
+        foreach($stores as $store){
+            array_push($data['stores_allowed'],$store->store_id);
+        }
+        $this->view('products/new',$data);
     }
 }
