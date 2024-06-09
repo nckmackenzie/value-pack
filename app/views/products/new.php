@@ -10,7 +10,7 @@
           </div>
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
-              <li class="breadcrumb-item text-sm">Transactions</li>
+              <li class="breadcrumb-item text-sm">Master Entry</li>
               <li class="breadcrumb-item text-sm"><a href="<?php echo URLROOT;?>/products">Products</a></li>
               <li class="breadcrumb-item text-sm active"><?php echo $data['title'];?></li>
             </ol>
