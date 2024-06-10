@@ -5,6 +5,7 @@ export function basicDatatable(table, columnDefs, ordering = false) {
     $(`#${table}`).DataTable({
       ordering: ordering,
       columnDefs,
+      responsive: true,
     });
   });
 }
