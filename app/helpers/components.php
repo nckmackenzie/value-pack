@@ -1,13 +1,11 @@
 <?php
 function action_buttons( $action = "", $path = "", $id = 0) {
     if($action === 'edit'){
-        echo "<a href=".URLROOT."/$path/edit/$id class='flex items-center gap-1 group'>
-                <i data-lucide='square-pen' class='size-3 text-emerald-300 group-hover:text-emerald-200'></i>
+        echo "<a href=".URLROOT."/$path/edit/$id class='group'>
                 <span class='text-emerald-400 transition-colors font-medium text-xs group-hover:text-emerald-300'>Edit</span>
               </a>";
     }else if($action === "delete"){
-        echo "<button type='button' class='flex items-center gap-1 group btndel outline-none focus:outline-none focus:border-none' data-id='$id'>
-                <i data-lucide='trash' class='size-3 text-rose-300 group-hover:text-rose-200'></i>
+        echo "<button type='button' class='group btndel outline-none focus:outline-none focus:border-none' data-id='$id'>
                 <span class='text-rose-400 transition-colors font-medium text-xs group-hover:text-rose-300'>Delete</span>
               </button>";
     }
