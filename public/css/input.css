@@ -60,6 +60,10 @@
     @apply h-9 rounded-md px-3;
   }
 
+  .btn-xs {
+    @apply px-2 py-1 text-xs;
+  }
+
   .action-btns {
     @apply flex items-center gap-2;
   }
