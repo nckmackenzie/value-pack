@@ -19,4 +19,14 @@ class Reusable
         $sql = 'SELECT id,UPPER(unit) as unit FROM units ORDER BY unit';
         return resultset($this->db->dbh,$sql,[]);
     }
+
+    public function get_products()
+    {
+        return resultset($this->db->dbh,'SELECT id,ucase(product_name) as product_name from products order by product_name',[]);
+    }
+
+    public function get_vendors()
+    {
+        return resultset($this->db->dbh,'SELECT id,ucase(supplier_name) as supplier_name from suppliers order by supplier_name',[]);
+    }
 }
