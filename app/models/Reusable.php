@@ -10,7 +10,7 @@ class Reusable
     
     public function get_stores()
     {
-        $sql = 'SELECT ID,UPPER(Store_Name) as Store_Name FROM stores WHERE Active=?';
+        $sql = 'SELECT ID as id,UPPER(Store_Name) as store_name FROM stores WHERE Active=?';
         return resultset($this->db->dbh,$sql,[true]);
     }
 

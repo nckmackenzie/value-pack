@@ -29,7 +29,7 @@
                 <select name="store" id="store" class="form-control <?php echo invalid_setter($data['store_err']); ?>">
                     <option value="" disabled selected>Select store</option>
                     <?php foreach($data['stores'] as $store): ?>
-                        <option value="<?php echo $store->ID;?>" <?php selectdCheck($data['store'],$store->ID)?>><?php echo $store->Store_Name;?></option>
+                        <option value="<?php echo $store->id;?>" <?php selectdCheck($data['store'],$store->id)?>><?php echo $store->store_name;?></option>
                     <?php endforeach;?>
                 </select>
                 <span class="invalid-feedback"><?php echo $data['store_err'];?></span>

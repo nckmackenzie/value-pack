@@ -95,7 +95,7 @@
                           <label for="stores">Stores Allowed In</label>
                           <select id="stores" name="stores[]"class="form-control mandatory <?php echo invalid_setter($data['stores_err']);?>" multiple>
                                 <?php foreach($data['stores'] as $store) :?>
-                                    <option value="<?php echo $store->ID;?>" <?php echo in_array($store->ID,$data['stores_allowed']) ? 'selected' : '' ;?> ><?php echo $store->Store_Name;?></option>
+                                    <option value="<?php echo $store->id;?>" <?php echo in_array($store->id,$data['stores_allowed']) ? 'selected' : '' ;?> ><?php echo $store->store_name;?></option>
                                 <?php endforeach; ?>
                           </select>
                           <span class="invalid-feedback"><?php echo $data['stores_err'];?></span>
