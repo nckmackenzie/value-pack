@@ -24,7 +24,7 @@
         </i><span>Create New supplier</span>
       </a>
       <div class="col-12 table-responsive">
-      <table class="table-cm table-responsive" id="suppliersDatatable">
+      <table class="display" style="width:100%" id="suppliersDatatable">
         <thead class="">
           <tr>
             <th scope="col" class="">Supplier Name</th>
@@ -37,7 +37,7 @@
         </thead>
         <tbody>
           <?php foreach($data['suppliers'] as $supplier) : ?>
-            <tr class="divide-y divide-sky-200">
+            <tr>
               <td class="capitalize"><?php echo $supplier->supplier_name;?></td>
               <td><?php echo $supplier->contact;?></td>
               <td class="lowercase"><?php echo $supplier->email;?></td>

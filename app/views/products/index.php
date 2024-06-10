@@ -24,7 +24,7 @@
         </i><span>Create New Product</span>
       </a>
       <div class="col-12 table-responsive">
-      <table class="table-cm table-responsive" id="productsDatatable">
+      <table class="display" style="width:100%" id="productsDatatable">
         <thead class="">
           <tr>
             <th scope="col" class="">Product Name</th>

@@ -23,7 +23,7 @@
             </i><span>Create New Store</span>
         </a>
         <!-- <div class="table-container"> -->
-          <table class="table-cm table-responsive" id="storesDatatable">
+          <table class="display" style="width:100%" id="storesDatatable">
             <thead class="">
               <tr>
                 <th scope="col" class="">
