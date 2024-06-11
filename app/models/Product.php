@@ -85,4 +85,14 @@ class Product
             return false;
         }
     }
+
+    public function product_found($product_id):bool
+    {
+        return (int)getdbvalue($this->db->dbh,'SELECT COUNT(*) FROM products WHERE id=?',[$product_id]) > 0;
+    }
+
+    public function get_rate($product_id)
+    {
+        return floatval(getdbvalue($this->db->dbh,'SELECT IFNULL(buying_price,0) FROM products WHERE id=?',[$product_id]));
+    }
 }

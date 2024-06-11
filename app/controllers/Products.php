@@ -168,4 +168,30 @@ class Products extends Controller
         }
         $this->view('products/new',$data);
     }
+
+    public function get_rate()
+    {
+        if($_SERVER['REQUEST_METHOD'] !== 'GET'){
+            http_response_code(405);
+            exit();
+        }
+
+        $product_id = filter_input(INPUT_GET,'product_id',FILTER_SANITIZE_SPECIAL_CHARS);
+
+        if(empty($product_id)){
+            http_response_code(422);
+            echo json_encode(['message' => 'Product is required.']);
+            exit();
+        }
+
+        
+        if(!$this->productmodel->product_found($product_id)){
+            http_response_code(404);
+            echo json_encode(['message' => 'Product not found.']);
+            exit();
+        }
+
+        $rate = $this->productmodel->get_rate($product_id);
+        echo json_encode(['success' => true, 'message' =>  null, 'data' => $rate]);
+    }
 }
