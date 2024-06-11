@@ -47,7 +47,7 @@
                         <input type="text" name="reference" id="reference"   class="form-control">
                     </div>
                 </div>
-                <div class="col-md-6">
+                <div class="col-md-4">
                     <div class="form-group">
                         <label for="vat_type">Vendor</label>
                         <select name="vat_type" id="vat_type" class="form-control mandatory">
@@ -59,12 +59,24 @@
                         <span class="invalid-feedback"><?php echo $data['vat_type_err'];?></span>
                     </div>
                 </div>
-                <div class="col-md-6">
+                <div class="col-md-4">
                     <div class="form-group">
                         <label for="vat">Vendor</label>
                         <select name="vat" id="vat" class="form-control" disabled>
                             <option value="" disabled selected>Select vat</option>
                             <option value="16">Vat 16%</option>
+                        </select>
+                        <span class="invalid-feedback"><?php echo $data['vat_err'];?></span>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label for="store">Receiving Store</label>
+                        <select name="store" id="store" class="form-control mandatory <?php invalid_setter($data['store_err']);?>">
+                            <option value="" disabled selected>Select store</option>
+                            <?php foreach($data['stores'] as $store) : ?>
+                                <option value="<?php echo $store->id;?>"><?php echo $store->store_name;?></option>
+                            <?php endforeach; ?>
                         </select>
                         <span class="invalid-feedback"><?php echo $data['vat_err'];?></span>
                     </div>
@@ -97,17 +109,36 @@
                 </div>
                 <div class="col-md-2">
                     <div class="form-group">
-                        <label for="rate">Value</label>
-                        <input type="text" name="rate" id="rate" class="form-control" readonly>
+                        <label for="value">Value</label>
+                        <input type="text" name="value" id="value" class="form-control" readonly>
                     </div>
                 </div>
-                <div class="col-md-12">
-                    <button class="btn btn-success">Add</button>
+                <div class="col-md-12 mb-2">
+                    <button class="btn btn-success" id="add">Add</button>
+                </div>
+            </div>
+            <hr>
+            <br>
+            <div class="row">
+                <div class="col-12">
+                    <table class="table-cm" id="items_table">
+                        <thead>
+                            <tr>
+                                <th class="w-[30%]">Product</th>
+                                <th class="w-[20%]">Qty</th>
+                                <th class="w-[20%]">Rate</th>
+                                <th class="w-[20%]">Value</th>
+                                <th class="w-[10%]"></th>
+                            </tr>      
+                        </thead> 
+                        <tbody></tbody>     
+                    </table>
                 </div>
             </div>
         </form>
     </section><!-- /.content -->
 </div><!-- /.content-wrapper -->
 <?php require APPROOT . '/views/inc/footer.php'?>
+<script type="module" src="<?php echo URLROOT;?>/js/pages/purchases/purchase.js"></script>
 </body>
 </html>  
