@@ -1,6 +1,8 @@
+import { getRequest } from '../../utils/ajax.js';
 import { basicDatatable } from '../../utils/datatable.js';
 import { numberWithCommas } from '../../utils/formatters.js';
 import { getSelectedText } from '../../utils/helpers.js';
+import { HOST_URL } from '../../utils/host.js';
 
 const table = document.getElementById('items_table');
 const tbody = table?.getElementsByTagName('tbody')[0];
@@ -12,6 +14,7 @@ const qtyInput = document.getElementById('qty');
 const rateInput = document.getElementById('rate');
 const valueInput = document.getElementById('value');
 const totalInput = document.getElementById('total');
+const alertBox = document.querySelector('.alert');
 
 const items = [];
 
@@ -40,6 +43,18 @@ vatTypeSelect?.addEventListener('change', e => {
     vatSelect.disabled = false;
   }
   vatSelect.value = '';
+});
+
+productSelect?.addEventListener('change', async e => {
+  const product = e.target.value;
+  if (!product || e.target.value.toString().trim().length === 0) return;
+  const res = await getRequest(
+    `${HOST_URL}/products/get_rate?product_id=${e.target.value}`
+  );
+  if (res.success) {
+    rateInput.value = res.data;
+  }
+  // console.log(rate);
 });
 
 function updateTable() {

@@ -70,7 +70,8 @@
                 <div class="col-md-4">
                     <div class="form-group">
                         <label for="vat">Vat</label>
-                        <select name="vat" id="vat" class="form-control <?php echo invalid_setter($data['vat_err']);?>" disabled>
+                        <select name="vat" id="vat" class="form-control <?php echo invalid_setter($data['vat_err']);?>" 
+                                <?php echo $data['vat_type'] === '' || $data['vat_type'] === 'no-vat' ? 'disabled' : '';?>>
                             <option value="" disabled selected>Select vat</option>
                             <option value="16" <?php selectdCheck($data['vat'],'16') ?>>Vat 16%</option>
                         </select>
