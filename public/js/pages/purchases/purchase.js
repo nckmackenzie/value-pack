@@ -1,5 +1,5 @@
 import { getRequest } from '../../utils/ajax.js';
-import { basicDatatable } from '../../utils/datatable.js';
+import { basicDatatable, deleteButtonClick } from '../../utils/datatable.js';
 import { numberWithCommas } from '../../utils/formatters.js';
 import { getSelectedText } from '../../utils/helpers.js';
 import { HOST_URL } from '../../utils/host.js';
@@ -49,7 +49,8 @@ productSelect?.addEventListener('change', async e => {
   const product = e.target.value;
   if (!product || e.target.value.toString().trim().length === 0) return;
   const res = await getRequest(
-    `${HOST_URL}/products/get_rate?product_id=${e.target.value}`
+    `${HOST_URL}/products/get_rate?product_id=${e.target.value}`,
+    alertBox
   );
   if (res.success) {
     rateInput.value = res.data;
@@ -147,3 +148,4 @@ table?.addEventListener('click', e => {
 });
 
 basicDatatable('purchasesDatatable', [{ width: '10%', targets: 4 }]);
+deleteButtonClick('purchasesDatatable', 'deleteModal', 'id');
