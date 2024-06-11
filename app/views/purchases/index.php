@@ -28,25 +28,25 @@
         <thead class="">
           <tr>
             <th scope="col" class="">Purchase Date</th>
-            <th scope="col" class="">Purchase No</th>
+            <th scope="col" class="text-left">Reference</th>
             <th scope="col" class="">Vendor</th>
-            <th scope="col" class="">Purchase Value</th>
+            <th scope="col" class="text-left">Purchase Value</th>
             <th scope="col" class="">Actions</th>
           </tr>
         </thead>
         <tbody>
-          <!-- <?php foreach($data['purchases'] as $purchase) : ?>
-            <tr class="divide-y divide-sky-200">
-              <td class="capitalize"></td>
-              <td></td>
-              <td class="lowercase"></td>
-              <td class="capitalize"></td>
+          <?php foreach($data['purchases'] as $purchase) : ?>
+            <tr>
+              <td ><?php echo date('d-m-Y',strtotime($purchase->purchase_date));?></td>
+              <td class="uppercase text-left"><?php echo $purchase->reference;?></td>
+              <td class="capitalize"><?php echo $purchase->supplier_name;?></td>
+              <td class="text-left"><?php echo number_format($purchase->total,2);?></td>
               <td class="flex items-center gap-2">
                 <?php action_buttons("edit","purchases",$purchase->id);?>
                 <?php action_buttons("delete","",$purchase->id);?>
               </td>
             </tr>
-          <?php endforeach;?> -->
+          <?php endforeach;?>
         </tbody>
       </table>
       </div>
