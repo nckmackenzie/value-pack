@@ -26,9 +26,9 @@ class Supplier
         
         if($data['is_edit']){
             $sql = 'UPDATE suppliers SET supplier_Name = :supplier, Contact = :contact, email = :email, contact_person = :contact_person,';
-            $sql .= 'active = :active WHERE id = :id';
+            $sql .= 'active = :active, created_by = :creator WHERE id = :id';
         }else{
-            $sql = 'INSERT INTO suppliers (id,supplier_name,contact,email,contact_person,active) VALUES (:id,:supplier,:contact,:email,:contact_person,:active)';
+            $sql = 'INSERT INTO suppliers (id,supplier_name,contact,email,contact_person,active,created_by) VALUES (:id,:supplier,:contact,:email,:contact_person,:active,:creator)';
         }
         $this->db->query($sql);
         if(!$data['is_edit']){
@@ -39,6 +39,7 @@ class Supplier
         $this->db->bind(':email',strtolower($data['email']));
         $this->db->bind(':contact_person',strtolower($data['contact_person']));
         $this->db->bind(':active',$data['active']);
+        $this->db->bind(':creator',$_SESSION['user_id']);
         if($data['is_edit']){
             $this->db->bind(':id',$data['id']);
         }
