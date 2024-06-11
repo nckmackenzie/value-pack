@@ -17,7 +17,7 @@
         </div>
       </div>
     </section>
-    <?php DeleteModal(URLROOT .'/purchases/delete','deleteModal','Are your you want to delete this supplier?','id'); ?>
+    <?php DeleteModal(URLROOT .'/purchases/delete','deleteModal','Are your you want to delete this purchase?','id'); ?>
     <?php flash('purchase_msg'); ?>
     <section class="content space-y-6">
       <a href="<?php echo URLROOT;?>/purchases/new" class="btn btn-info"><i data-lucide="plus" class="icon mr-1.5 text-slate-600">

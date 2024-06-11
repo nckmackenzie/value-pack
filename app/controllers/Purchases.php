@@ -17,7 +17,7 @@ class Purchases extends Controller
     {
         $data = [
             'title' => 'Purchases',
-            'purchases' => []
+            'purchases' => $this->purchasemodel->get_purchases()
         ];
         $this->view('purchases/index', $data);
     }
@@ -134,6 +134,84 @@ class Purchases extends Controller
         if(!$this->purchasemodel->create_update($data)){
             $data['error'] = 'Something went wrong while performing this action.';
             $this->view('purchases/new',$data);
+            exit();
+        }
+
+        redirect('purchases');
+    }
+
+    public function edit($id)
+    {
+        $purchase = $this->purchasemodel->get_purchase($id);
+        if(!$purchase){
+            $this->not_found('/products', 'The purchase you are trying to edit doesn\'t exist');
+            exit();
+        }
+
+        $data = [
+            'title' => 'Update purchase',
+            'products' => $this->reusablemodel->get_products(),
+            'suppliers' => $this->reusablemodel->get_vendors(),
+            'stores' => $this->reusablemodel->get_stores(),
+            'id' => $purchase->id,
+            'is_edit' => true,
+            'date' => date('Y-m-d',strtotime($purchase->purchase_date)),
+            'vendor' => $purchase->supplier_id,
+            'reference' => $purchase->reference,
+            'vat_type' => $purchase->vat_type,
+            'vat' => $purchase->vat,
+            'store' => $purchase->store_id, 
+            'items' => [],
+            'total' => 0,
+            'store_err' => '',
+            'vendor_err' => '',
+            'date_err' => '',
+            'vat_type_err' => '',
+            'vat_err' => '',
+            'error' => null
+        ];
+
+        $products = $this->purchasemodel->get_purchase_products($id);
+
+        foreach($products as $product){
+            array_push($data['items'],[
+                'product_id' => $product->product_id,
+                'product_name' => strtoupper($product->product_name),
+                'qty' => $product->qty,
+                'rate' => $product->rate,
+                'value' => $product->total
+            ]);
+        }
+
+        $data['total'] = number_format(array_sum(array_column($data['items'],'value')),2);
+
+        $this->view('purchases/new', $data);
+    }
+
+    public function delete()
+    {
+        if($_SERVER['REQUEST_METHOD'] !== 'POST'){
+            flash('purchase_msg','Invalid request method.');
+            redirect('purchases');
+            exit();
+        }
+
+        $id = filter_input(INPUT_POST,'id',FILTER_SANITIZE_SPECIAL_CHARS);
+        if(empty($id)){
+            flash('purchase_msg','Unable to get selected purchase.');
+            redirect('purchases');
+            exit();
+        }
+
+        if(!$this->purchasemodel->purchase_exists($id)){
+            flash('purchase_msg',"The purchase you are trying to delete doesn't exist.");
+            redirect('purchases');
+            exit();
+        }
+
+        if(!$this->purchasemodel->delete($id)){
+            flash('purchase_msg',"Something went wrong while deleteting this purchase.");
+            redirect('purchases');
             exit();
         }
 
