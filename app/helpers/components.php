@@ -26,7 +26,7 @@ function DeleteModal($route,$modalid,$message,$inputid){
                         <form action='$route' method='post'>
                             <div class='row'>
                                 <div class='col-12'>
-                                    <label for='$inputid'>$message</label>
+                                    <p>$message</p>
                                     <input type='hidden' name='id' id='$inputid'>
                                 </div>
                             </div>
