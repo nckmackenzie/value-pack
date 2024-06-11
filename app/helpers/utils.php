@@ -170,3 +170,21 @@ function check_rights($model,$form){
         exit;
     }
 }
+
+function calculate_vat($type, $net_amount){
+    $vat_percentage = 0.16;
+    switch ($type) {
+        case "no-vat":
+            return array($net_amount, 0, $net_amount);
+        case "inclusive":
+            $vat_amount = ($vat_percentage * $net_amount) / 1.16;
+            $exclusive_amount = $net_amount - $vat_amount;
+            return array($exclusive_amount, $vat_amount, $net_amount);
+        case "exclusive":
+            $vat_amount = $net_amount * $vat_percentage;
+            $inclusive_amount = $net_amount + $vat_amount;
+            return array($net_amount, $vat_amount, $inclusive_amount);
+        default:
+            return null;
+    }
+}
