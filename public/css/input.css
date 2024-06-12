@@ -168,4 +168,8 @@
   .mandatory {
     @apply border-l-2 border-l-rose-300;
   }
+
+  .table-input {
+    @apply bg-transparent group-hover:bg-transparent hover:bg-transparent focus:bg-transparent;
+  }
 }
