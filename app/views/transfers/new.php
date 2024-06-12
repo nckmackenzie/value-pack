@@ -22,15 +22,19 @@
         <form action="<?php echo URLROOT;?>/transfers/create_update" method="post">
             <div class="col-md-6 mx-auto">
                 <?php flash('transfer_msg');?>
-                <?php if(!is_null($data['error'])) : ?>
-                    <div class="alert custom-destructive"><?php echo $data['error'];?></div>
+                <?php if(!is_null($data['errors']) && count($data['errors']) > 0) : ?>
+                    <div class="alert custom-destructive">
+                        <?php foreach($data['errors'] as $error) : ?>
+                            <p class="text-sm font-medium text-rose-900">👉 <?php echo $error; ?></p>
+                        <?php endforeach; ?>
+                    </div>
                 <?php endif; ?>
             </div>
             <div class="row">
                 <div class="col-md-4">
                     <div class="form-group">
                         <label for="transfer_date">Transfer Date</label>
-                        <input type="date" name="dtransfer_ate" id="transfer_date" 
+                        <input type="date" name="transfer_date" id="transfer_date" 
                                class="form-control mandatory <?php echo invalid_setter($data['transfer_date_err']);?>"
                                value="<?php echo $data['transfer_date']; ?>">
                         <span class="invalid-feedback"><?php echo $data['transfer_date_err'];?></span>
