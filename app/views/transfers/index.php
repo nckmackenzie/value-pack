@@ -27,28 +27,28 @@
       <table class="display" style="width:100%" id="transfersDatatable">
         <thead class="">
           <tr>
-            <th scope="col" class="">Transfer Date</th>
+            <th scope="col" class="text-left">Transfer Date</th>
             <th scope="col" class="text-left">Transfer No</th>
-            <th scope="col" class="">To Store</th>
-            <th scope="col" class="text-left">Transfer Value</th>
+            <th scope="col" class="text-left">To Store</th>
             <th scope="col" class="text-left">Status</th>
             <th scope="col" class="">Actions</th>
           </tr>
         </thead>
         <tbody>
-          <!-- <?php foreach($data['transfers'] as $transfer) : ?>
+          <?php foreach($data['transfers'] as $transfer) : ?>
             <tr>
-              <td ><?php echo date('d-m-Y',strtotime($transfer->transfer_date));?></td>
-              <td class="uppercase text-left"><?php echo $transfer->reference;?></td>
-              <td class="uppercase"><?php echo $transfer->store_name;?></td>
-              <td class="text-left"><?php echo number_format($transfer->total,2);?></td>
-              <td class="text-left"><?php echo $transfer->total;?></td>
+              <td class="text-left"><?php echo date('d-m-Y',strtotime($transfer->transfer_date));?></td>
+              <td class="uppercase text-left"><?php echo $transfer->transfer_no;?></td>
+              <td class="uppercase text-left"><?php echo $transfer->store_name;?></td>
+              <td class="text-left">
+                <div class="uppercase capsule <?php echo $transfer->status === 'pending' ? 'capsule-destructive' : 'capsule-success';?>"><?php echo $transfer->status;?></div>
+              </td>
               <td class="flex items-center gap-2">
                 <?php action_buttons("edit","transfers",$transfer->id);?>
                 <?php action_buttons("delete","",$transfer->id);?>
               </td>
             </tr>
-          <?php endforeach;?> -->
+          <?php endforeach;?>
         </tbody>
       </table>
       </div>
