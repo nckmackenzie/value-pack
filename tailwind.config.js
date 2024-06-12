@@ -1,5 +1,5 @@
 module.exports = {
-  content: ['./*.php', './app/**/*.php'],
+  content: ['./*.php', './app/**/*.php', './*.js', './public/**/*.js'],
   theme: {
     extend: {
       height: {
