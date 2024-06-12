@@ -44,4 +44,9 @@ class Reusable
         return resultset($this->db->dbh,$sql,[$store]);
     }
 
+    public function get_current_stock_balance($store,$product,$date)
+    {
+        return getdbvalue($this->db->dbh,'SELECT fn_get_current_stock(?,?,?) AS Stock;',[$store,$product,$date]);
+    }
+
 }
