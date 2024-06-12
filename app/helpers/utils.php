@@ -188,3 +188,9 @@ function calculate_vat($type, $net_amount){
             return null;
     }
 }
+
+function get_next_db_no($con,$table,$field = 'id'){
+    $count = (int)getdbvalue($con,"SELECT COUNT(*) FROM $table",[]);
+    if($count === 0) return 1;
+    return (int)getdbvalue($con,"SELECT MAX($field) FROM $table",[]) + 1;
+}
