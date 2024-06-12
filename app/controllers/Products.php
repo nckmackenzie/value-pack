@@ -194,4 +194,31 @@ class Products extends Controller
         $rate = $this->productmodel->get_rate($product_id);
         echo json_encode(['success' => true, 'message' =>  null, 'data' => $rate]);
     }
+
+    public function get_stock()
+    {
+        if($_SERVER['REQUEST_METHOD'] !== 'GET'){
+            http_response_code(405);
+            exit();
+        }
+
+        $store = filter_input(INPUT_GET,'store',FILTER_SANITIZE_SPECIAL_CHARS);
+        $product = filter_input(INPUT_GET,'product',FILTER_SANITIZE_SPECIAL_CHARS);
+        $date = filter_input(INPUT_GET,'date',FILTER_SANITIZE_SPECIAL_CHARS);
+
+        if(empty($store) || empty($product) || empty($date)){
+            http_response_code(422);
+            echo json_encode(['message' => 'Store, product and date are required.']);
+            exit();
+        }
+
+        if(!$this->productmodel->product_found($product)){
+            http_response_code(404);
+            echo json_encode(['message' => 'Product not found.']);
+            exit();
+        }
+
+        $balance = $this->productmodel->get_current_stock_balance($store,$product,date('Y-m-d',strtotime($date)));
+        echo json_encode(['success' => true, 'message' =>  null, 'data' => $balance]);
+    }
 }

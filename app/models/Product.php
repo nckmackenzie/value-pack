@@ -95,4 +95,9 @@ class Product
     {
         return floatval(getdbvalue($this->db->dbh,'SELECT IFNULL(buying_price,0) FROM products WHERE id=?',[$product_id]));
     }
+
+    public function get_current_stock_balance($store,$product,$date)
+    {
+        return getdbvalue($this->db->dbh,'SELECT fn_get_current_stock(?,?,?) AS Stock;',[$store,$product,$date]);
+    }
 }
