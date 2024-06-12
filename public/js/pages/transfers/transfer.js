@@ -67,9 +67,9 @@ function updateTable() {
     .map(item => {
       return `
         <tr class="hover:[&>*]:bg-transparent">
-            <td class="hidden"><input class="table-input type="text" name="product_id[]" value="${item.productId}"/></td>
-            <td class="hover:[&>*]:bg-transparent"><input type="text" name="product[]" class="w-full" value="${item.productName}"/></td>
-            <td><input type="number" name="qty[]" value="${item.qty}" /></td>
+            <td class="hidden"><input class="table-input" type="text" name="product_id[]" value="${item.productId}"/></td>
+            <td class="hover:[&>*]:bg-transparent"><input type="text" name="product[]" class="table-input w-full" value="${item.productName}" readonly/></td>
+            <td><input type="number" name="qty[]" class="table-input w-full" value="${item.qty}" readonly /></td>
             <td><button type="button" class="outline-none border-none text-rose-400 focus:outline-0">Remove</button></td>
         </tr>
         `;
