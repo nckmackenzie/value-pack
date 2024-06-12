@@ -29,4 +29,19 @@ class Reusable
     {
         return resultset($this->db->dbh,'SELECT id,ucase(supplier_name) as supplier_name from suppliers order by supplier_name',[]);
     }
+
+    public function get_products_by_store($store)
+    {
+        $sql = 'SELECT 
+                    product_id as id,
+                    product_name as product_name 
+                FROM product_stores s 
+                    join products p on s.product_id = p.id 
+                WHERE 
+                    store_id = ?
+                ORDER BY 
+                    product_name';
+        return resultset($this->db->dbh,$sql,[$store]);
+    }
+
 }
