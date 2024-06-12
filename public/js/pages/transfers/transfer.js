@@ -10,11 +10,27 @@ const alertBox = document.querySelector('.alert');
 const qtyInput = document.getElementById('qty');
 const addBtn = document.getElementById('add');
 const table = document.getElementById('items_table');
-const tbody = table.getElementsByTagName('tbody')[0];
+const tbody = table?.getElementsByTagName('tbody')[0];
 
 const items = [];
 
-basicDatatable('transfersDatatable', [{ width: '10%', targets: 5 }]);
+basicDatatable('transfersDatatable', [{ width: '10%', targets: 4 }]);
+
+document.addEventListener('DOMContentLoaded', function () {
+  function createItemObject(row) {
+    const inputs = row.querySelectorAll('input');
+    return {
+      productId: inputs[0].value,
+      productName: inputs[1].value,
+      qty: parseInt(inputs[2].value, 10),
+    };
+  }
+
+  tbody?.querySelectorAll('tr').forEach(row => {
+    const item = createItemObject(row);
+    items.push(item);
+  });
+});
 
 productSelect?.addEventListener('change', async e => {
   const product = e.target.value;
@@ -33,12 +49,30 @@ addBtn?.addEventListener('click', () => {
     return;
   }
 
+  const itemEntered = items.some(
+    item => item.productId === productSelect.value
+  );
+  if (itemEntered) {
+    alert('This item has already been entered.');
+    return;
+  }
+
   items.push({
     productId: productSelect.value,
     productName: productSelect.options[productSelect.selectedIndex].text,
     qty: qtyInput.value,
   });
   updateTable();
+  qtyInput.value = productSelect.value = currentStockInput.value = '';
+});
+
+table?.addEventListener('click', function (e) {
+  if (e.target.classList.contains('text-rose-400')) {
+    const productId = e.target.closest('tr').querySelector('input').value;
+    const index = items.findIndex(item => item.productId === productId);
+    items.splice(index, 1);
+    updateTable();
+  }
 });
 
 async function getStock() {
