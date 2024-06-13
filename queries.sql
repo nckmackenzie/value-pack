@@ -44,5 +44,15 @@ ALTER TABLE
 ADD 
   CONSTRAINT `fk_transfer_details_product_id` FOREIGN KEY (`product_id`) REFERENCES `products`(`id`) ON DELETE RESTRICT ON UPDATE RESTRICT;
 
+INSERT INTO `forms` (
+  `id`, `form_name`, `module`, `module_id`, 
+  `path`, `menu_order`
+) 
+VALUES 
+  (
+    NULL, 'receipts', 'transactions', 
+    '15', 'receipts', '15'
+  );
+
 
 COMMIT;
