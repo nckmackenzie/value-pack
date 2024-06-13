@@ -21,7 +21,7 @@ class Transfer
                     transfer_date,
                     transfer_no,
                     s.store_name as store_name,
-                    'pending' as status
+                    (SELECT COUNT(*) FROM receipts_headers WHERE (transfer_id = h.id)) as rec_count
                 FROM
                     transfers_headers h join stores s on h.store_to = s.id
                 WHERE
