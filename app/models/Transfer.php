@@ -34,6 +34,7 @@ class Transfer
 
     function save($data)
     {
+        $transfer_no = $this->get_transfer_no();
         try {
 
             $this->db->dbh->beginTransaction();
@@ -46,7 +47,7 @@ class Transfer
             $this->db->bind(':transfer_date', $data['transfer_date']);
             $this->db->bind(':store_from', $_SESSION['store']);
             $this->db->bind(':store_to', $data['store']);
-            $this->db->bind(':transfer_no', $data['transfer_no']);           
+            $this->db->bind(':transfer_no', $transfer_no);           
             $this->db->bind(':creator', $_SESSION['user_id']);
             $this->db->execute();
 
