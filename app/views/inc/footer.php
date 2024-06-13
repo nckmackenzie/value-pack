@@ -11,12 +11,13 @@
 <script src="<?php echo URLROOT;?>/plugins/jquery-validation/jquery.validate.min.js"></script>
 <script src="<?php echo URLROOT;?>/plugins/jquery-validation/additional-methods.min.js"></script>
 <!-- DATATABLES -->
-
-<script src="https://cdn.datatables.net/v/dt/jszip-3.10.1/dt-2.0.8/b-3.0.2/b-colvis-3.0.2/b-html5-3.0.2/b-print-3.0.2/r-3.0.2/sl-2.0.3/datatables.min.js"></script>
+<script src="<?php echo URLROOT;?>/plugins/datatables/datatables.min.js"></script>
+<!-- <script src="https://cdn.datatables.net/v/dt/jszip-3.10.1/dt-2.0.8/b-3.0.2/b-colvis-3.0.2/b-html5-3.0.2/b-print-3.0.2/r-3.0.2/sl-2.0.3/datatables.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/pdfmake.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/vfs_fonts.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/vfs_fonts.js"></script> -->
 <!-- DATATABLES -->
 <script src="<?php echo URLROOT;?>/plugins/select2/dist/js/select2.min.js"></script>
+
 
 
 <script src="<?php echo URLROOT;?>/plugins/moment/moment.min.js"></script>
