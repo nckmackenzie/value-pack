@@ -15,7 +15,10 @@ class Transfers extends Controller
 
     public function index()
     {
-        $data =['title' => 'Transfers','transfers' => $this->transfermodel->get_transfers()];
+        $data =[
+            'title' => 'Transfers',
+            'transfers' => $this->transfermodel->get_transfers()
+        ];
         $this->view('transfers/index',$data);
     }
 
