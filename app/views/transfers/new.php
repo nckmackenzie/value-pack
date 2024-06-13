@@ -108,8 +108,8 @@
                             <?php foreach($data['items'] as $item) : ?>
                                 <tr>
                                     <td class="hidden"><input type="text" name="product_id[]" value="<?php echo $item['product_id'];?>"/></td>
-                                    <td><input type="text" name="product[]" class="w-full uppercase" value="<?php echo $item['product_name'];?>"/></td>
-                                    <td><input type="number" name="qty[]" value="<?php echo $item['qty'];?>" /></td>
+                                    <td><input type="text" name="product[]" class="w-full uppercase" value="<?php echo $item['product_name'];?>" readonly/></td>
+                                    <td><input type="number" name="qty[]" value="<?php echo $item['qty'];?>" readonly /></td>
                                     <td><button type="button" class="outline-none border-none text-rose-400 focus:outline-0">Remove</button></td>
                                 </tr>
                             <?php endforeach; ?>
