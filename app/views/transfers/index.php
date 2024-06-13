@@ -41,7 +41,9 @@
               <td class="uppercase text-left"><?php echo $transfer->transfer_no;?></td>
               <td class="uppercase text-left"><?php echo $transfer->store_name;?></td>
               <td class="text-left">
-                <div class="uppercase capsule <?php echo $transfer->status === 'pending' ? 'capsule-destructive' : 'capsule-success';?>"><?php echo $transfer->status;?></div>
+                <div class="uppercase capsule <?php echo (int)$transfer->rec_count === 0 ? 'capsule-destructive' : 'capsule-success';?>">
+                  <?php echo (int)$transfer->rec_count === 0 ? 'pending' : 'received';?>
+                </div>
               </td>
               <td class="flex items-center gap-2">
                 <?php action_buttons("edit","transfers",$transfer->id);?>
