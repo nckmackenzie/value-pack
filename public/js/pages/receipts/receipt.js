@@ -51,7 +51,7 @@ function renderTable(data) {
     .map(
       dt =>
         `<tr>
-            <td class="hidden"><input type="text" name="product_id[]" value="${dt.product_id}"/></td>
+            <td class="hidden"><input type="text" name="product_id[]" value="${dt.id}"/></td>
             <td><input type="text" name="product[]" class="w-full table-input uppercase" value="${dt.product_name}" readonly/></td>
             <td><input type="number" name="transfered_qty[]" class="table-input" value="${dt.qty}" readonly/></td>
             <td><input type="number" name="received_qty[]" style="background-color: azure;" value="" /></td>
