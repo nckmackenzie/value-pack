@@ -51,7 +51,7 @@ class Reusable
 
     public function get_customers()
     {
-        return getdbvalue($this->db->dbh,'SELECT id,customer_name from customers order by customer_name;',[]);
+        return resultset($this->db->dbh,'SELECT id,customer_name from customers order by customer_name;',[]);
     }
 
 }
