@@ -49,4 +49,9 @@ class Reusable
         return getdbvalue($this->db->dbh,'SELECT fn_get_current_stock(?,?,?) AS Stock;',[$store,$product,$date]);
     }
 
+    public function get_customers()
+    {
+        return getdbvalue($this->db->dbh,'SELECT id,customer_name from customers order by customer_name;',[]);
+    }
+
 }
