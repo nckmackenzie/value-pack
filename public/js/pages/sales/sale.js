@@ -1,6 +1,7 @@
 import { HOST_URL } from '../../utils/host.js';
 import { getRequest } from '../../utils/ajax.js';
 import { numberWithCommas } from '../../utils/formatters.js';
+import { basicDatatable } from '../../utils/datatable.js';
 const baseUrl = `${HOST_URL}/products`;
 
 const productSelect = document.getElementById('product');
@@ -60,3 +61,5 @@ function getValue() {
 
   valueInput.value = numberWithCommas(parseFloat(qty) * parseFloat(rate));
 }
+
+basicDatatable('salesDatatable', [{ width: '10%', targets: 5 }]);
