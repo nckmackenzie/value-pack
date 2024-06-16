@@ -8,6 +8,25 @@ class Sale
         $this->db = new Database;
     }
 
+    public function get_sales()
+    {
+        $sql = "SELECT
+                    s.id,
+                    s.sale_date,
+                    s.sale_no,
+                    c.customer_name,
+                    s.sale_type,
+                    s.amount
+                FROM
+                    sales s join customers c on s.customer_id = c.id
+                WHERE
+                    s.store_id = ?
+                ORDER BY
+                    s.sale_date DESC
+                ";
+        return resultset($this->db->dbh,$sql,[$_SESSION['store']]);
+    }
+
     public function get_sale_no()
     {
         return get_next_db_no($this->db->dbh,'sales','sale_no');
@@ -20,8 +39,8 @@ class Sale
             $this->db->dbh->beginTransaction();
 
             if(!$data['is_edit']){
-                $sql = "INSERT INTO sales (id, sale_date, sale_no, customer_id, sale_type, product_id, qty, rate, amount, created_by) 
-                        VALUES (:id,:sale_date,:sale_no,:customer_id,:sale_type,:product_id,:qty,:rate,:amount,:created_by) ";
+                $sql = "INSERT INTO sales (id, sale_date, sale_no, customer_id, sale_type, product_id, qty, rate, amount, store_id, created_by) 
+                        VALUES (:id,:sale_date,:sale_no,:customer_id,:sale_type,:product_id,:qty,:rate,:amount,:store_id,:created_by) ";
             }else{
                 $sql = "UPDATE sales SET sale_date = :sale_date, sale_no = :sale_no, customer_id = :customer_id, sale_type = :sale_type,  
                                          product_id = :product_id, qty = :qty, rate = :rate, amount = :amount, created_by = :created_by
@@ -39,6 +58,9 @@ class Sale
             $this->db->bind(':qty',$data['qty']);
             $this->db->bind(':rate',$data['rate']);
             $this->db->bind(':amount',$data['total_value']);
+            if(!$data['is_edit']){
+                $this->db->bind(':store_id',$_SESSION['store']);
+            }
             $this->db->bind(':created_by',$_SESSION['user_id']);
             if($data['is_edit']){
                 $this->db->bind(':id',$data['id']); 
