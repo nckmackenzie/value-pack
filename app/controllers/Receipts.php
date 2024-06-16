@@ -17,8 +17,7 @@ class Receipts extends Controller
     {
         $data = [
             'title' => 'Receipts',
-            // 'receipts' => $this->receiptmodel->get_receipts()
-            'receipts' => []
+            'receipts' => $this->receiptmodel->get_receipts()
         ];
         $this->view('receipts/index',$data);
     }

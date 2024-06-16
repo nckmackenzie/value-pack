@@ -9,6 +9,24 @@ class Receipt
         $this->db = new Database;
     }
 
+    public function get_receipts()
+    {
+        $sql = "SELECT
+                    r.id,
+                    receipt_date,
+                    receipt_no,
+                    s.Store_Name as store_name
+                FROM
+                    receipts_headers r join transfers_headers t on r.transfer_id = t.id
+                    join stores s on t.store_from = s.ID
+                WHERE
+                    (store_id = ?)
+                ORDER BY
+                    receipt_no DESC
+                ";
+        return resultset($this->db->dbh,$sql,[$_SESSION['store']]);
+    }
+
     public function get_receipt_no()
     {
         return get_next_db_no($this->db->dbh,'receipts_headers','receipt_no');
@@ -73,13 +91,14 @@ class Receipt
             $receipt_no = $this->get_receipt_no();
             $this->db->dbh->beginTransaction();
 
-            $sql = 'INSERT INTO receipts_headers (id,receipt_date, receipt_no, transfer_id, created_by) 
-                    VALUES(:id,:receipt_date,:receipt_no,:transfer_id,:creator)';
+            $sql = 'INSERT INTO receipts_headers (id,receipt_date, receipt_no, transfer_id, store_id, created_by) 
+                    VALUES(:id,:receipt_date,:receipt_no,:transfer_id,:store_id,:creator)';
             $this->db->query($sql);
             $this->db->bind(':id', $data['id']);
             $this->db->bind(':receipt_date',$data['receipt_date']);
             $this->db->bind(':receipt_no', $receipt_no);
             $this->db->bind(':transfer_id', $data['transfer_no']);
+            $this->db->bind(':store_id', $_SESSION['store']);
             $this->db->bind(':creator', $_SESSION['user_id']);
             $this->db->execute();
 
