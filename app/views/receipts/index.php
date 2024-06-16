@@ -34,20 +34,17 @@
           </tr>
         </thead>
         <tbody>
-          <!-- <?php foreach($data['receipts'] as $receipt) : ?>
+           <?php foreach($data['receipts'] as $receipt) : ?>
             <tr>
               <td class="text-left"><?php echo date('d-m-Y',strtotime($receipt->receipt_date));?></td>
               <td class="uppercase text-left"><?php echo $receipt->receipt_no;?></td>
               <td class="uppercase text-left"><?php echo $receipt->store_name;?></td>
-              <td class="text-left">
-                <div class="uppercase capsule <?php echo $receipt->status === 'pending' ? 'capsule-destructive' : 'capsule-success';?>"><?php echo $receipt->status;?></div>
-              </td>
               <td class="flex items-center gap-2">
                 <?php action_buttons("edit","receipts",$receipt->id);?>
                 <?php action_buttons("delete","",$receipt->id);?>
               </td>
             </tr>
-          <?php endforeach;?> -->
+          <?php endforeach;?>
         </tbody>
       </table>
       </div>
