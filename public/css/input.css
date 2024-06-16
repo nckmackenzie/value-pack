@@ -97,6 +97,10 @@
     @apply border-transparent bg-teal-100 text-teal-950 hover:bg-teal-100/80;
   }
 
+  .capsule-info {
+    @apply border-transparent bg-sky-100 text-sky-950 hover:bg-sky-100/80;
+  }
+
   .capsule-destructive {
     @apply border-transparent bg-rose-100 text-rose-950 hover:bg-rose-100/80;
   }
