@@ -17,8 +17,7 @@ class Sales extends Controller
     {
         $data = [
             'title' => 'Daily Sales',
-            'sales' => []
-            // 'sales' => $this->reusablemodel->getSales()
+            'sales' => $this->salemodel->get_sales()
         ];
         $this->view('sales/index',$data);
     }
