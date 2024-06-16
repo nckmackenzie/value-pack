@@ -40,8 +40,11 @@ function resultset($con,$sql,$arr){
     return $stmt->fetchAll(PDO::FETCH_OBJ);
 }
 
-function cuid(){
+function cuid($short = false) {
     $cuid = new EndyJasmi\Cuid;
+    if($short){
+        return $cuid->slug();
+    }
     return $cuid->cuid(); 
 }
 
