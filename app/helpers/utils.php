@@ -194,3 +194,12 @@ function get_next_db_no($con,$table,$field = 'id'){
     if($count === 0) return 1;
     return (int)getdbvalue($con,"SELECT MAX($field) FROM $table",[]) + 1;
 }
+
+function date_validator($validator_type,$date1,$date2 = ''){
+    switch ($validator_type) {
+        case 'greater_than_today':
+            return strtotime($date1) > strtotime(date('Y-m-d'));
+        default:
+            return false;
+    }
+}
