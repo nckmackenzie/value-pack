@@ -15,7 +15,25 @@ class Product
     }
 
     public function get_products(){
-        return resultset($this->db->dbh,'SELECT * FROM products ORDER BY product_name',[]);
+        $sql = "
+            SELECT
+                id,
+                product_name,
+                product_code,
+                unit_id,
+                buying_price,
+                selling_price,
+                description,
+                IFNULL(reorder_level,0) AS reorder_level,
+                is_stock_item,
+                active,
+                fn_get_current_stock(?,id,CURDATE()) as current_stock
+            FROM 
+                products
+            ORDER BY
+                product_name
+        ";
+        return resultset($this->db->dbh,$sql,[$_SESSION['store']]);
     }
 
     public function get_product($id){
