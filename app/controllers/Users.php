@@ -57,12 +57,13 @@ class Users extends Controller
         }
 
         $user_name = filter_input(INPUT_POST,'user_name', FILTER_SANITIZE_SPECIAL_CHARS);
-        $password = filter_input(INPUT_POST,'password', FILTER_SANITIZE_SPECIAL_CHARS);
         $contact = filter_input(INPUT_POST,'contact', FILTER_SANITIZE_SPECIAL_CHARS);
-        $confirm_password = filter_input(INPUT_POST,'confirm_password', FILTER_SANITIZE_SPECIAL_CHARS);
-        $role = filter_input(INPUT_POST,'role', FILTER_SANITIZE_NUMBER_INT);
         $id = filter_input(INPUT_POST,'id', FILTER_SANITIZE_SPECIAL_CHARS);
         $is_edit = filter_input(INPUT_POST,'is_edit',FILTER_VALIDATE_BOOLEAN);
+        $password = filter_input(INPUT_POST,'password', FILTER_SANITIZE_SPECIAL_CHARS);
+        $confirm_password = filter_input(INPUT_POST,'confirm_password', FILTER_SANITIZE_SPECIAL_CHARS);
+        $role = filter_input(INPUT_POST,'role', FILTER_SANITIZE_NUMBER_INT);
+        $active = filter_input(INPUT_POST,'active', FILTER_VALIDATE_BOOLEAN);        
 
         $data = [
             'title' => $is_edit ? 'Update user' : 'Create user',
@@ -76,7 +77,7 @@ class Users extends Controller
             'contact' => !empty($contact) ? trim($contact) : '',
             'role' => !empty($role) ? (int)$role : '',
             'stores_allowed' => isset($_POST['store'])  ? $_POST['store'] : [],
-            'active' => $is_edit ? filter_input(INPUT_POST,'active',FILTER_VALIDATE_BOOLEAN) : true,
+            'active' => !$is_edit ? true : $active ?? false,
             'user_name_err' => '',
             'password_err' => '',
             'confirm_password_err' => '',
@@ -89,10 +90,10 @@ class Users extends Controller
         if(empty($data['user_name'])){
             $data['user_name_err'] = 'Enter user name';
         }
-        if(empty($data['password'])){
+        if(empty($data['password']) && $is_edit === false){
             $data['password_err'] = 'Enter password';
         }
-        if(empty($data['confirm_password'])){
+        if(empty($data['confirm_password']) && $is_edit === false){
             $data['confirm_password_err'] = 'Confirm password';
         }
         if(empty($data['contact'])){
@@ -128,5 +129,37 @@ class Users extends Controller
         }
 
         redirect('users');
+    }
+
+    public function edit($id)
+    {
+        $user = $this->usermodel->get_user($id);
+        if(!$user){
+            $this->not_found('/users', 'The user you are trying to edit doesn\'t exist');
+            exit();
+        }
+        $data = [
+            'title' => 'Update user',
+            'stores' => $this->reusablemodel->get_stores(),
+            'roles' => $this->usermodel->get_roles(),
+            'id' => $user->id,
+            'is_edit' => true,
+            'user_name' => strtoupper($user->user_name),
+            'password' => '',
+            'confirm_password' => '',
+            'contact' => $user->contact,
+            'role' => $user->role_id,
+            'active' => (bool)$user->active,
+            'stores_allowed' => array_column($this->authmodel->get_user_stores($user->id), 'store_id'),
+            'user_name_err' => '',
+            'password_err' => '',
+            'confirm_password_err' => '',
+            'role_err' => '',
+            'contact_err' => '',
+            'store_err' => '',
+            'error' => null
+        ];
+        // $user_stores = array_column($this->authmodel->get_user_stores($user->id), 'store_id');
+        $this->view('users/new', $data);
     }
 }
