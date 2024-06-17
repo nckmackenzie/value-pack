@@ -78,30 +78,14 @@ function getusermenuitems($con,$user_id)
     }
     else
     {
-        $has_rights = getdbvalue($con,'SELECT COUNT(*) FROM user_rights WHERE user_id=?',[$user_id]) > 0;
-        if($has_rights){
-            $sql = 'SELECT 
+        $sql = 'SELECT 
                         DISTINCT f.module 
-                    FROM 
-                        user_rights r INNER JOIN forms f on r.form_id = f.id 
-                    WHERE (r.user_id = ?)
-                    ORDER BY f.module_id';
-            $stmt = $con->prepare($sql);
-            $stmt->execute([$user_id]);
-        }
-        if(!$has_rights && !is_null($role)){
-            $sql = 'SELECT 
-                        DISTINCT f.module 
-                    FROM 
-                        role_rights r INNER JOIN forms f on r.form_id = f.id 
-                    WHERE (r.role_id = ?)
-                    ORDER BY f.module_id';
-            $stmt = $con->prepare($sql);
-            $stmt->execute([$role]);
-        }
-        if(!$has_rights && !$is_admin){
-            return [];
-        }    
+                FROM 
+                    role_rights r INNER JOIN forms f on r.form_id = f.id 
+                WHERE (r.role_id = ?)
+                ORDER BY f.module_id';
+        $stmt = $con->prepare($sql);
+        $stmt->execute([$role]);
     }    
     $results = $stmt->fetchAll(PDO::FETCH_OBJ);
     $modules = array();
