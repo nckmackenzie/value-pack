@@ -86,7 +86,9 @@ class Auth extends Publicontroller
             exit();
         }
 
-        if((int)$user->role_id > 1 && ((int)$user->store_id !== (int)$data['store'])){
+        $user_stores = array_column($this->authmodel->get_user_stores($user->id), 'store_id');
+
+        if((int)$user->role_id > 1 && !in_array($data['store'], $user_stores)){
             $data['error'] = 'User not registered for selected store';
             $this->view('auth/login',$data);
             exit();

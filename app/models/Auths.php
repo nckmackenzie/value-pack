@@ -21,4 +21,9 @@ class Auths
     {
         return check_role_rights($this->db->dbh,$_SESSION['role'],$form);
     }
+
+    public function get_user_stores($userid)
+    {
+        return resultset($this->db->dbh,'SELECT store_id FROM user_stores WHERE user_id = ?',[$userid]);
+    }
 }
