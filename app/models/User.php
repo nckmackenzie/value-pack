@@ -77,4 +77,9 @@ class User
             return false;
         }
     }
+
+    public function get_user($id)
+    {
+        return singleset($this->db->dbh,'SELECT * FROM users WHERE id = ?',[$id]);
+    }
 }
