@@ -50,7 +50,7 @@ class Stores extends Controller
             'id' => !empty($id) ? $id : '',
             'is_edit' => $is_edit,
             'store_name' => !empty($store_name) ? trim($store_name) : null,
-            'active' => $is_edit ? $active : true,
+            'active' => $is_edit ? $active ?? false : true,
             'store_name_err' => '',
             'error' => null
         ];
