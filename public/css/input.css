@@ -176,4 +176,16 @@
   .table-input {
     @apply bg-transparent group-hover:bg-transparent hover:bg-transparent focus:bg-transparent;
   }
+
+  .dt-paging-button.current {
+    background-color: #3b82f6 !important; /* bg-blue-500 */
+    border: none !important;
+    color: #ffffff !important; /* text-white */
+    padding: 0.5rem 1rem !important; /* py-2 px-4 */
+    border-radius: 0.25rem !important; /* rounded */
+  }
+
+  .dt-paging-button.current:hover {
+    background-color: #1d4ed8 !important; /* hover:bg-blue-700 */
+  }
 }
