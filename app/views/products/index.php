@@ -41,7 +41,13 @@
               <td class="capitalize"><?php echo $product->product_name;?></td>
               <td class="uppercase"><?php echo $product->product_code;?></td>
               <td><?php echo number_format($product->selling_price,2);?></td>
-              <td><?php echo number_format(0,2);?></td>
+              <td>
+                <?php if((bool)$product->is_stock_item === false) : ?>
+                  <div class="capsule capsule-info">Non stock item</div>
+                <?php else : ?>
+                  <div class="capsule <?php echo floatval($product->current_stock) >= floatval($product->reorder_level) ? 'capsule-success' : 'capsule-destructive' ;?>"><?php echo number_format($product->current_stock,2);?></div>
+                <?php endif; ?>
+              </td>
               <td class=""><div class="capsule <?php echo (bool)$product->active ? 'capsule-success' : 'capsule-destructive';?>"><?php echo $product->active ? 'Active' : 'Inactive';?></div></td>
               <td class="flex items-center gap-2">
                 <?php action_buttons("edit","products",$product->id);?>
