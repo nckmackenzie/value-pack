@@ -34,9 +34,9 @@
                 </select>
                 <span class="invalid-feedback"><?php echo $data['store_err'];?></span>
             </div>
-            <div class="flex justify-end mb-4">
+            <!-- <div class="flex justify-end mb-4">
                 <a href="" class="text-sm text-blue-600 transition-colors hover:text-blue-500">Forgot password?</a>
-            </div>
+            </div> -->
             <button class="btn btn-default w-full">Login</button>
         </form>
     </div>
