@@ -106,7 +106,15 @@
                             <label for="description">Product Description</label>
                             <textarea name="description" id="description" class="form-control"><?php echo $data['description'];?></textarea>
                         </div>
-                    </div>
+                    </div>  
+                    <div class="mb-3 p-2 w-full">
+                        <label class="inline-flex items-center cursor-pointer" id="label_stock">
+                            <input type="checkbox" id="is_stock" value="<?php echo $data['is_stock'] ? 'true' : 'false';?>" class="sr-only peer" name="is_stock" <?php echo $data['is_stock'] ? 'checked' : '';?>>
+                            <div class="relative w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 rounded-full peer peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all  peer-checked:bg-blue-600"></div>
+                            <span class="ms-3 text-sm font-medium text-gray-900">Is stock product</span>
+                        </label>
+                        <p class="text-xs text-slate-500 -mt-1">Stock products will have inventory control and management.</p>
+                    </div>                  
                     <?php if($data['is_edit']) : ?>
                       <div class="col-12 flex items-baseline gap-2">
                         <label class="switch">
