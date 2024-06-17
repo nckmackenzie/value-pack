@@ -82,4 +82,15 @@ class User
     {
         return singleset($this->db->dbh,'SELECT * FROM users WHERE id = ?',[$id]);
     }
+
+    public function reset_password($data)
+    {
+        $this->db->query('UPDATE users SET password = :password WHERE id = :id');
+        $this->db->bind(':password', password_hash($data['password'], PASSWORD_DEFAULT));
+        $this->db->bind(':id', $data['id']);
+        if(!$this->db->execute()){
+            return false;
+        }
+        return true;
+    }
 }

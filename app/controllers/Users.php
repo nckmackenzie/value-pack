@@ -10,7 +10,6 @@ class Users extends Controller
         $this->authmodel = $this->model('Auths');
         $this->usermodel = $this->model('User');
         $this->reusablemodel = $this->model('Reusable');
-        check_rights($this->authmodel,'users');
     }
 
     public function index()
@@ -21,7 +20,6 @@ class Users extends Controller
         ];
         $this->view('users/index', $data);
     }
-
     public function new()
     {
         $data = [
@@ -159,7 +157,53 @@ class Users extends Controller
             'store_err' => '',
             'error' => null
         ];
-        // $user_stores = array_column($this->authmodel->get_user_stores($user->id), 'store_id');
         $this->view('users/new', $data);
+    }
+
+    public function reset_password($id)
+    {
+        $data = [
+            'title' => 'Reset password',
+            'password' => '',
+            'confirm_password' => '',
+            'password_err' => ''
+        ];
+        if(empty($data['password'])){
+            $data['password_err'] = 'Enter user password';
+        }
+        if(empty($data['confirm_password'])){
+            $data['confirm_password_err'] = 'Confirm user password';
+        }
+        if(!empty($data['password']) && !empty($data['confirm_password']) && ($data['password'] !== $data['confirm_password'])){
+            $data['confirm_password_err'] = 'Password not matched';
+        }
+
+        if(!empty($data['password_err']) || !empty($data['confirm_password_err'])){
+            $this->view('users/reset_password', $data);
+            exit();
+        }
+
+        $user = $this->usermodel->get_user($data['id']);
+        if(!$user){
+            $data['error'] = 'The user you are trying to reset password doesn\'t exist.';
+            $this->view('users/reset_password', $data);
+            exit();
+        }
+
+        if((bool)$user->active === false){
+            $data['error'] = 'The user you are trying to reset password is deactivated.';
+            $this->view('users/reset_password', $data);
+            exit();
+        }
+
+        if(!$this->usermodel->reset_password($data)){
+            $data['error'] = 'Something went wrong. Please try again later.';
+            $this->view('users/reset_password', $data);
+            exit();
+        }
+
+        flash('user_msg','Password reset was successfull.👍',alert_type('success'));
+        redirect('users');
+
     }
 }
