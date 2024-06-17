@@ -91,9 +91,13 @@ class Product
         return (int)getdbvalue($this->db->dbh,'SELECT COUNT(*) FROM products WHERE id=?',[$product_id]) > 0;
     }
 
-    public function get_rate($product_id)
+    public function get_rate($product_id,$is_sale = false)
     {
-        return floatval(getdbvalue($this->db->dbh,'SELECT IFNULL(buying_price,0) FROM products WHERE id=?',[$product_id]));
+        if(!$is_sale){
+            return floatval(getdbvalue($this->db->dbh,'SELECT IFNULL(buying_price,0) FROM products WHERE id=?',[$product_id]));
+        }
+
+        return floatval(getdbvalue($this->db->dbh,'SELECT IFNULL(selling_price,0) FROM products WHERE id=?',[$product_id]));
     }
 
     public function get_current_stock_balance($store,$product,$date)
