@@ -24,7 +24,7 @@ async function getRate() {
   const product = productSelect.value;
   if (!product || product.toString().trim().length === 0) return;
   const res = await getRequest(
-    `${baseUrl}/get_rate?product_id=${product}`,
+    `${baseUrl}/get_selling_rate?product_id=${product}`,
     alertBox
   );
   if (!res.success) {
