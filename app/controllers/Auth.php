@@ -86,6 +86,12 @@ class Auth extends Publicontroller
             exit();
         }
 
+        if(!$user->active){
+            $data['error'] = 'This account is currently deactivated.😔';
+            $this->view('auth/login',$data);
+            exit();
+        }
+
         $user_stores = array_column($this->authmodel->get_user_stores($user->id), 'store_id');
 
         if((int)$user->role_id > 1 && !in_array($data['store'], $user_stores)){
