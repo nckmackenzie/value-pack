@@ -41,6 +41,7 @@ class Products extends Controller
             'stores_allowed' => [],
             'allow_nil' => false,
             'active' => true,
+            'is_stock' => true,
             'name_err' => '',
             'code_err' => '',
             'unit_err' => '',
@@ -67,6 +68,7 @@ class Products extends Controller
         $description = filter_input(INPUT_POST,'description', FILTER_SANITIZE_SPECIAL_CHARS);
         $restock_level = filter_input(INPUT_POST,'restock_level', FILTER_SANITIZE_NUMBER_INT, FILTER_FLAG_ALLOW_FRACTION);
         $active = filter_input(INPUT_POST,'active', FILTER_VALIDATE_BOOLEAN);
+        $is_stock = filter_input(INPUT_POST,'is_stock', FILTER_VALIDATE_BOOLEAN);
         $is_edit = filter_input(INPUT_POST, 'is_edit', FILTER_VALIDATE_BOOLEAN);
         $id = filter_input(INPUT_POST, 'id', FILTER_SANITIZE_SPECIAL_CHARS);
 
@@ -85,7 +87,8 @@ class Products extends Controller
             'restock_level' => !empty($restock_level) ? $restock_level : null,
             'stores_allowed' => isset($_POST['stores'])  ? $_POST['stores'] : [],
             'allow_nil' => false,
-            'active' => !$is_edit ? true : $active,
+            'active' => !$is_edit ? true : $active ?? false,
+            'is_stock' => $is_stock ?? false,
             'name_err' => '',
             'code_err' => '',
             'unit_err' => '',
@@ -155,6 +158,7 @@ class Products extends Controller
             'stores_allowed' => [],
             'allow_nil' => false,
             'active' => $product->active,
+            'is_stock' => $product->is_stock_item,
             'name_err' => '',
             'code_err' => '',
             'unit_err' => '',

@@ -34,11 +34,11 @@ class Product
             $this->db->dbh->beginTransaction();
 
             if(!$data['is_edit']){
-                $sql = "INSERT INTO products (id,product_name,product_code,unit_id,buying_price,selling_price,reorder_level,created_by) ";
-                $sql .= "VALUES (:id,:product_name,:product_code,:unit_id,:buying_price,:selling_price,:reorder_level,:creator)";
+                $sql = "INSERT INTO products (id,product_name,product_code,unit_id,buying_price,selling_price,reorder_level,is_stock_item,created_by) ";
+                $sql .= "VALUES (:id,:product_name,:product_code,:unit_id,:buying_price,:selling_price,:reorder_level,:is_stock,:creator)";
             }else{
                 $sql = "UPDATE products SET product_name = :product_name, product_code = :product_code, unit_id = :unit_id, buying_price = :buying_price, ";
-                $sql .= "selling_price = :selling_price,reorder_level = :reorder_level,created_by = :creator WHERE (id = :id)";
+                $sql .= "selling_price = :selling_price,reorder_level = :reorder_level, is_stock_item = :is_stock, created_by = :creator WHERE (id = :id)";
             }
 
             $this->db->query($sql);
@@ -51,6 +51,7 @@ class Product
             $this->db->bind(':buying_price',$data['buying_price']);
             $this->db->bind(':selling_price',$data['selling_price']);
             $this->db->bind(':reorder_level',$data['restock_level']);
+            $this->db->bind(':is_stock',$data['is_stock']);
             $this->db->bind(':creator',$_SESSION['user_id']);
             if($data["is_edit"]){
                 $this->db->bind(':id',$data['id']);
