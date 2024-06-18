@@ -92,7 +92,7 @@
                         <?php endif; ?>
                     </div>
                 </div>
-                <?php if($data['is_edit']) : ?>
+                 <?php if($data['is_edit']) : ?>
                       <div class="col-12 flex items-baseline gap-2">
                         <label class="switch">
                           <input type="checkbox" value="<?php echo $data['active'] ? 'true' : 'false';?>" class="switch-input" name="active" <?php echo $data['active'] ? 'checked' : '';?>>
