@@ -18,7 +18,7 @@ class Supplier
     }
 
     public function get_supplier($id){
-        return singleset($this->db->dbh,'SELECT * FROM suppliers WHERE ID=?',[$id]);
+        return singleset($this->db->dbh,'SELECT * FROM suppliers WHERE id =?',[$id]);
     }
 
     public function create_update($data){
@@ -65,7 +65,7 @@ class Supplier
 
     public function delete($id)
     {
-        $this->db->query('DELETE FROM suppliers WHERE ID = :id');
+        $this->db->query('DELETE FROM suppliers WHERE id = :id');
         $this->db->bind(':id', $id);
         if(!$this->db->execute()){
             return false;
