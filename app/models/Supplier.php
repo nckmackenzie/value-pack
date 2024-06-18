@@ -25,7 +25,7 @@ class Supplier
        try {
         
         if($data['is_edit']){
-            $sql = 'UPDATE suppliers SET supplier_Name = :supplier, Contact = :contact, email = :email, contact_person = :contact_person,';
+            $sql = 'UPDATE suppliers SET supplier_name = :supplier, contact = :contact, email = :email, contact_person = :contact_person,';
             $sql .= 'active = :active, created_by = :creator WHERE id = :id';
         }else{
             $sql = 'INSERT INTO suppliers (id,supplier_name,contact,email,contact_person,active,created_by) VALUES (:id,:supplier,:contact,:email,:contact_person,:active,:creator)';
@@ -56,7 +56,7 @@ class Supplier
 
     public function is_referenced($id):bool
     {
-        $count =  (int)getdbvalue($this->db->dbh,'SELECT COUNT(*) FROM user_suppliers WHERE supplier_id = ?',[$id]);
+        $count =  (int)getdbvalue($this->db->dbh,'SELECT COUNT(*) FROM purchases_headers WHERE supplier_id = ?',[$id]);
         if($count > 0){
             return true;
         }
