@@ -251,4 +251,36 @@ class Products extends Controller
         $balance = $this->productmodel->get_current_stock_balance($store,$product,date('Y-m-d',strtotime($date)));
         echo json_encode(['success' => true, 'message' =>  null, 'data' => $balance]);
     }
+
+    public function delete()
+    {
+        if($_SERVER['REQUEST_METHOD'] !== 'POST'){
+            flash('product_msg','Invalid request method.','alert-danger');
+            redirect('products/new');
+            exit();
+        }
+
+        $id = filter_input(INPUT_POST,'id',FILTER_SANITIZE_SPECIAL_CHARS);
+
+        if(empty($id)){
+            flash('product_msg','Unable to get selected product.', alert_type('error'));
+            redirect('products');
+            exit();
+        }
+
+        if($this->productmodel->is_referenced($id)){
+            flash('product_msg','Cannot delete this product as its already assigned to other users.', alert_type('error'));
+            redirect('products');
+            exit();
+        }
+
+        if(!$this->productmodel->delete($id)){
+            flash('product_msg','Something went wrong while performing this task. Please try again.', alert_type('error'));
+            redirect('products');
+            exit();
+        }
+
+        flash('product_msg','Product deleted successfully.', alert_type('success'));
+        redirect('products');
+    }
 }

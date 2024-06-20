@@ -123,4 +123,38 @@ class Product
     {
         return getdbvalue($this->db->dbh,'SELECT fn_get_current_stock(?,?,?) AS Stock;',[$store,$product,$date]);
     }
+
+    public function is_referenced($id)
+    {
+        return (int)getdbvalue($this->db->dbh,'SELECT COUNT(*) FROM stock_movements WHERE product_id = ?',[$id]) > 0;
+    }
+
+    public function delete($id)
+    {
+        try {
+            
+            $this->db->dbh->beginTransaction();
+
+            $this->db->query('DELETE FROM product_stores WHERE product_id = :product_id');
+            $this->db->bind(':product_id', $id);
+            $this->db->execute();
+
+            $this->db->query('DELETE FROM products WHERE id = :id');
+            $this->db->bind(':id', $id);
+            $this->db->execute();
+
+            if(!$this->db->dbh->commit()){
+                return false;
+            }
+
+            return true;
+
+        } catch (\Exception $e) {
+            if($this->db->dbh->inTransaction()){
+                $this->db->dbh->rollBack();
+            }
+            error_log($e->getMessage());
+            return false;
+        }
+    }
 }
