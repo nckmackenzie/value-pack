@@ -1,4 +1,4 @@
-import { basicDatatable } from '../../utils/datatable.js';
+import { basicDatatable, deleteButtonClick } from '../../utils/datatable.js';
 
 const switchCheck = document.querySelector('#label_stock');
 const switchInput = document.querySelector('#is_stock');
@@ -19,3 +19,4 @@ switchCheck?.addEventListener('click', function (e) {
 
 activateMultiSelect();
 basicDatatable('productsDatatable', [{ width: '10%', targets: 5 }]);
+deleteButtonClick('productsDatatable', 'deleteModal', 'id');
