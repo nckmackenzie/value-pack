@@ -18,7 +18,7 @@
     <link rel="stylesheet" href="<?php echo URLROOT;?>/plugins/daterangepicker/daterangepicker.css">
     <link rel="stylesheet" href="<?php echo URLROOT; ?>/css/adminlte.min.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-multiselect/1.1.2/css/bootstrap-multiselect.min.css">
-    <link rel="stylesheet" href="<?php echo URLROOT; ?>/css/styles.css">
+    <link rel="stylesheet" href="<?php echo URLROOT; ?>/css/output.css">
 </head>
 <body class="hold-transition sidebar-mini">
     
