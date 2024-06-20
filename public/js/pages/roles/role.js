@@ -1,4 +1,5 @@
-import { basicDatatable } from '../../utils/datatable.js';
+import { basicDatatable, deleteButtonClick } from '../../utils/datatable.js';
+
 const table = document.querySelector('.table-cm');
 const tbody = table?.getElementsByTagName('tbody')[0];
 
@@ -11,3 +12,4 @@ table?.addEventListener('click', function (event) {
 });
 
 basicDatatable('rolesDatatable', [{ width: '10%', targets: 1 }]);
+deleteButtonClick('rolesDatatable', 'deleteModal', 'id');
