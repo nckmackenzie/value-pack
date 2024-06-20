@@ -104,4 +104,33 @@ class Roles extends Controller
 
         redirect('roles');
     }
+    
+    public function edit($id)
+    {
+        $role = $this->rolemodel->get_role($id);
+        if(!$role){
+            $this->not_found('/roles', 'The role you are trying to edit doesn\'t exist');
+            exit();
+        }
+
+        $data = [
+            'title' => 'Update role',
+            'role_name' => strtoupper($role->role_name),
+            'id' => $role->id,
+            'is_edit' => true,
+            'forms' => [],
+            'role_name_err' => '',
+            'error' => null
+        ];
+
+        foreach($this->rolemodel->get_forms(true, $role->id) as $form){
+            array_push($data['forms'],[
+                'form_id' => $form->id,
+                'form_name' => $form->form_name,
+                'module' => $form->module,
+                'checked' => (bool)$form->checked,
+            ]);
+        }
+        $this->view('roles/new',$data);
+    }
 }
