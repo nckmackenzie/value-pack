@@ -28,25 +28,28 @@
         <thead class="">
           <tr>
             <th scope="col" class="">Invoice Date</th>
-            <th scope="col" class="">Invoice No</th>
+            <th scope="col" class="text-left">Invoice No</th>
             <th scope="col" class="">Customer</th>
-            <th scope="col" class="">Invoice Value</th>
+            <th scope="col" class="text-left">Invoice Value</th>
             <th scope="col" class="">Actions</th>
           </tr>
         </thead>
         <tbody>
-          <!-- <?php foreach($data['invoices'] as $invoice) : ?>
+          <?php foreach($data['invoices'] as $invoice) : ?>
             <tr>
-              <td class="capitalize"><?php echo $invoice->invoice_name;?></td>
-              <td><?php echo $invoice->contact;?></td>
-              <td class="lowercase"><?php echo $invoice->email;?></td>
-              <td class=""><div class="capsule <?php echo (bool)$invoice->active ? 'capsule-success' : 'capsule-destructive';?>"><?php echo $invoice->active ? 'Active' : 'Inactive';?></div></td>
+              <td class="capitalize"><?php echo date('d-m-Y',strtotime($invoice->invoice_date));?></td>
+              <td class="text-left"><?php echo $invoice->invoice_no;?></td>
+              <td class="uppercase"><?php echo $invoice->customer_name;?></td>
+              <td class="text-left"><div class="capsule capsule-info"><?php echo number_format($invoice->inclusive_amount,2);?></div></td>
               <td class="flex items-center gap-2">
                 <?php action_buttons("edit","invoices",$invoice->id);?>
+                <a href="<?php echo URLROOT;?>/invoices/print/<?php echo $invoice->id;?>" class='group'>
+                  <span class='text-amber-400 transition-colors font-medium text-sm group-hover:text-amber-300'>Print</span>
+                </a>
                 <?php action_buttons("delete","",$invoice->id);?>
               </td>
             </tr>
-          <?php endforeach;?> -->
+          <?php endforeach;?>
         </tbody>
       </table>
       </div>
