@@ -138,6 +138,6 @@
 </div><!-- /.content-wrapper -->
 <?php require APPROOT . '/views/inc/footer.php'?>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-multiselect/1.1.2/js/bootstrap-multiselect.min.js"></script>
-<script type="module" src="<?php echo URLROOT;?>/js/pages/products/products.js"></script>
+<script type="module" src="<?php echo URLROOT;?>/js/pages/products/products-v1.js"></script>
 </body>
 </html>  
