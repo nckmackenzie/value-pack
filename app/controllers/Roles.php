@@ -34,10 +34,10 @@ class Roles extends Controller
 
         foreach($this->rolemodel->get_forms() as $form){
             array_push($data['forms'],[
-                'id' => $form->id,
+                'form_id' => $form->id,
                 'form_name' => $form->form_name,
                 'module' => $form->module,
-                'checked' => 'false'
+                'checked' => false
             ]);
         }
         $this->view('roles/new',$data);
@@ -132,5 +132,37 @@ class Roles extends Controller
             ]);
         }
         $this->view('roles/new',$data);
+    }
+
+    function delete()
+    {
+        if($_SERVER['REQUEST_METHOD'] !== 'POST'){
+            flash('role_msg','Invalid request method.','alert-danger');
+            redirect('roles/new');
+            exit();
+        }
+
+        $id = filter_input(INPUT_POST,'id',FILTER_SANITIZE_SPECIAL_CHARS);
+
+        if(empty($id)){
+            flash('role_msg','Unable to get selected role.', alert_type('error'));
+            redirect('roles');
+            exit();
+        }
+
+        if($this->rolemodel->is_referenced($id)){
+            flash('role_msg','Cannot delete this role as its already assigned to other users.', alert_type('error'));
+            redirect('roles');
+            exit();
+        }
+
+        if(!$this->rolemodel->delete($id)){
+            flash('role_msg','Something went wrong while performing this task. Please try again.', alert_type('error'));
+            redirect('roles');
+            exit();
+        }
+
+        flash('role_msg','Role deleted successfully.', alert_type('success'));
+        redirect('roles');
     }
 }

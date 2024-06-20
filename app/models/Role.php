@@ -94,4 +94,38 @@ class Role
     {
         return singleset($this->db->dbh,'SELECT * FROM roles WHERE id = ?',[$id]);
     }
+
+    public function is_referenced($id)
+    {
+        return (int)getdbvalue($this->db->dbh,'SELECT COUNT(*) FROM users WHERE role_id = ?',[$id]) > 0;
+    }
+
+    public function delete($id)
+    {
+        try {
+            
+            $this->db->dbh->beginTransaction();
+
+            $this->db->query('DELETE FROM role_rights WHERE role_id = :role_id');
+            $this->db->bind(':role_id', $id);
+            $this->db->execute();
+
+            $this->db->query('DELETE FROM roles WHERE id = :id');
+            $this->db->bind(':id', $id);
+            $this->db->execute();
+
+            if(!$this->db->dbh->commit()){
+                return false;
+            }
+
+            return true;
+
+        } catch (\Exception $e) {
+            if($this->db->dbh->inTransaction()){
+                $this->db->dbh->rollBack();
+            }
+            error_log($e->getMessage());
+            return false;
+        }
+    }
 }
