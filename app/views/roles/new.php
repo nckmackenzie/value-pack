@@ -55,10 +55,10 @@
                                 <?php foreach($data['forms'] as $form) : ?>
                                     <tr>
                                         <td>
-                                            <input type="hidden" name="state[]" class="table-input state" value="<?php echo $form['checked'];?>">
-                                            <input type="checkbox" name="form_checkbox[]" class="table-input checkbox">
+                                            <input type="hidden" name="state[]" class="table-input state" value="<?php echo (bool)$form['checked'] ? 'true' : 'false';?>">
+                                            <input type="checkbox" name="form_checkbox[]" class="table-input checkbox" <?php echo (bool)$form['checked'] ? 'checked' : '' ;?>>
                                         </td>
-                                        <td class="hidden"><input type="text" name="form_id[]" value="<?php echo $form['id'];?>" class="table-input"></td>
+                                        <td class="hidden"><input type="text" name="form_id[]" value="<?php echo $form['form_id'];?>" class="table-input"></td>
                                         <td><input type="text" name="module[]" value="<?php echo $form['module'];?>" class="table-input uppercase"></td>
                                         <td><input type="text" name="form_name[]" value="<?php echo $form['form_name'];?>" class="table-input uppercase"></td>
                                     </tr>
