@@ -8,6 +8,21 @@ class invoice
         $this->db = new Database;
     }
 
+    public function get_invoices()
+    {
+        $sql = "SELECT 
+                    i.id,
+                    invoice_date,
+                    invoice_no,
+                    customer_name,
+                    inclusive_amount
+                FROM
+                    invoices_headers i join customers c on i.customer_id = c.id
+                WHERE 
+                    store_id=?";
+        return resultset($this->db->dbh,$sql,[$_SESSION['store']]);
+    }
+
     public function get_invoice_no()
     {
         return get_next_db_no($this->db->dbh,'invoices_headers','invoice_no');
@@ -146,4 +161,37 @@ class invoice
         }
     }
 
+    public function get_invoice($id)
+    {
+        $sql = "SELECT 
+                    i.id,
+                    invoice_date,
+                    invoice_no,
+                    customer_name,
+                    contact,
+                    pin,
+                    exclusive_amount,
+                    vat_amount,
+                    inclusive_amount
+                FROM
+                    invoices_headers i join customers c on i.customer_id = c.id
+                WHERE 
+                    i.id=?";
+        return singleset($this->db->dbh,$sql,[$id]);
+    }
+
+    public function invoice_items($id)
+    {
+        $sql = "SELECT
+                    product_name,
+                    qty,
+                    rate,
+                    gross
+                FROM 
+                    invoices_details d join products p on d.product_id = p.id
+                WHERE 
+                    d.header_id = ?
+        ";
+        return resultset($this->db->dbh,$sql,[$id]);
+    }
 }

@@ -17,7 +17,7 @@ class Invoices extends Controller
     {
         $data = [
             'title' => 'Invoices',
-            'invoices' => []
+            'invoices' => $this->invoicemodel->get_invoices()
         ];
         $this->view('invoices/index', $data);
     }
@@ -140,5 +140,21 @@ class Invoices extends Controller
         }
 
         redirect('invoices');
+    }
+
+    public function print($id)
+    {
+        $invoice = $this->invoicemodel->get_invoice($id);
+        if(!$invoice){
+            $this->not_found('/invoices','Invoice not found');
+            exit();
+        }
+
+        $data = [
+            'title' => 'Print Invoice',
+            'header' => $invoice,
+            'items' => $this->invoicemodel->invoice_items($id)
+        ];
+        $this->view('invoices/print', $data);
     }
 }
