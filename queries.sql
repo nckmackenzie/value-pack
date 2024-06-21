@@ -191,5 +191,16 @@ ALTER TABLE
 ADD 
   CONSTRAINT `fk_invoice_details_header` FOREIGN KEY (`header_id`) REFERENCES `invoices_headers`(`id`) ON DELETE RESTRICT ON UPDATE RESTRICT;
 
-
+-- for test server 
+DELIMITER $$
+CREATE FUNCTION `fn_right_set`(fid varchar(100), rid varchar(100)) RETURNS TINYINT
+    DETERMINISTIC
+BEGIN 
+  DECLARE is_set TINYINT;
+  SET is_set = (SELECT COUNT(*)
+                FROM role_rights
+                WHERE (form_id = fid) AND (role_id = rid));
+  RETURN is_set;
+END$$
+DELIMITER ;
 COMMIT;
