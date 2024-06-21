@@ -64,7 +64,7 @@ class Product
                 $this->db->bind(':id',$data['id']);
             }           
             $this->db->bind(':product_name',strtolower($data['name']));
-            $this->db->bind(':product_code',strtolower($data['code']));
+            $this->db->bind(':product_code',$data['code']);
             $this->db->bind(':unit_id',$data['unit']);
             $this->db->bind(':buying_price',$data['buying_price']);
             $this->db->bind(':selling_price',$data['selling_price']);
