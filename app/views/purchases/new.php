@@ -96,7 +96,7 @@
                 <div class="col-md-6">
                     <div class="form-group">
                         <label for="product">Product</label>
-                        <select name="product" id="product" class="form-control">
+                        <select id="product" class="form-control">
                             <option value="" disabled selected>Select product</option>
                             <?php foreach($data['products'] as $product) : ?>
                                 <option value="<?php echo $product->id;?>"><?php echo $product->product_name;?></option>
@@ -107,19 +107,19 @@
                 <div class="col-md-2">
                     <div class="form-group">
                         <label for="qty">Qty</label>
-                        <input type="number" name="qty" id="qty" class="form-control">
+                        <input type="number" id="qty" class="form-control">
                     </div>
                 </div>
                 <div class="col-md-2">
                     <div class="form-group">
                         <label for="rate">Rate</label>
-                        <input type="number" name="rate" id="rate" class="form-control">
+                        <input type="number" id="rate" class="form-control">
                     </div>
                 </div>
                 <div class="col-md-2">
                     <div class="form-group">
                         <label for="value">Value</label>
-                        <input type="text" name="value" id="value" class="form-control" readonly>
+                        <input type="text" id="value" class="form-control" readonly>
                     </div>
                 </div>
                 <div class="col-md-12 mb-2">
