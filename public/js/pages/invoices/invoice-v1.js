@@ -64,7 +64,7 @@ function updateTable() {
       item =>
         ` <tr>
               <td class="hidden"><input type="text" name="product_id[]" value="${item.productId}"/></td>
-              <td><input type="text" name="product[]" class="w-full" value="${item.productName}"/></td>
+              <td><input type="text" name="products[]" class="w-full" value="${item.productName}"/></td>
               <td><input type="number" name="qty[]" value="${item.qty}" /></td>
               <td><input type="number" name="rate[]" value="${item.rate}" /></td>
               <td><input type="number" name="value[]" value="${item.value}" /></td>
