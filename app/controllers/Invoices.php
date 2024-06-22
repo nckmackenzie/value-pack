@@ -60,7 +60,7 @@ class Invoices extends Controller
         $vat = filter_input(INPUT_POST, 'vat', FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION);
         $id = filter_input(INPUT_POST, 'id', FILTER_SANITIZE_SPECIAL_CHARS);
         $is_edit = filter_input(INPUT_POST,'is_edit',FILTER_VALIDATE_BOOLEAN);
-        $products = isset($_POST['product']) ? $_POST['product'] : [];
+        $products = isset($_POST['products']) ? $_POST['products'] : [];
         $product_ids = isset($_POST['product_id']) ? $_POST['product_id'] : [];
         $quantities = isset($_POST['qty']) ? $_POST['qty'] : [];
         $rates = isset($_POST['rate']) ? $_POST['rate'] : [];
