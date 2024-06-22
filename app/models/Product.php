@@ -66,8 +66,8 @@ class Product
             $this->db->bind(':product_name',strtolower($data['name']));
             $this->db->bind(':product_code',$data['code']);
             $this->db->bind(':unit_id',$data['unit']);
-            $this->db->bind(':buying_price',$data['buying_price']);
-            $this->db->bind(':selling_price',$data['selling_price']);
+            $this->db->bind(':buying_price',!empty($data['buying_price']) ? $data['buying_price'] : 0);
+            $this->db->bind(':selling_price',!empty($data['selling_price']) ? $data['selling_price'] : 0);
             $this->db->bind(':reorder_level',$data['restock_level']);
             $this->db->bind(':is_stock',$data['is_stock']);
             $this->db->bind(':creator',$_SESSION['user_id']);

@@ -81,8 +81,8 @@ class Products extends Controller
             'name' => !empty(trim($product_name)) ? trim($product_name) : null,
             'code' => !empty(trim($product_code)) ? trim($product_code) : null,
             'unit' => !empty($unit) ? $unit : null,
-            'buying_price' => !empty($buying_price) ? floatval($buying_price) : 0,
-            'selling_price' => !empty($selling_price) ? floatval($selling_price) : 0,
+            'buying_price' => !empty($buying_price) ? floatval($buying_price) : '',
+            'selling_price' => !empty($selling_price) ? floatval($selling_price) : '',
             'description' => !empty($description) ? $description : null,
             'restock_level' => !empty($restock_level) ? $restock_level : null,
             'stores_allowed' => isset($_POST['stores'])  ? $_POST['stores'] : [],
@@ -104,7 +104,7 @@ class Products extends Controller
         if(is_null($data['unit'])){
             $data['unit_err'] = 'Select unit of measurement.';
         }
-        if(!is_null($data['selling_price']) && !is_null($data['buying_price']) && ($buying_price > $selling_price)){
+        if(!empty($data['selling_price']) && !empty($data['buying_price']) && ($buying_price > $selling_price)){
             $data['selling_price_err'] = 'Selling price is lower than buying price.';
         }
         
