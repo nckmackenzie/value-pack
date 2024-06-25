@@ -137,24 +137,26 @@ class Receipts extends Controller
         if(empty($data['receipt_date'])){
             $data['receipt_date_err'] = 'Select receipt date';
         }
-        if(empty($data['store_from'])){
-            $data['store_from_err'] = 'Select store from';
-        }else{
-            $data['transfers'] = $this->receiptmodel->get_transfers($data['store_from']);
-        }
-        if(empty($data['transfer_no'])){
-            $data['transfer_no_err'] = 'Select transfer no';
-        }else{
-            for ($i=0; $i < count($products); $i++) { 
-                array_push($data['items'],[
-                    'product_id' => $product_ids[$i],
-                    'product_name' => $products[$i],
-                    'transfered_qty' => $transfered_qtys[$i],
-                    'received_qty' => $received_qtys[$i],
-                ]);
+        if(!$data['is_edit']){
+            if(empty($data['store_from'])){
+                $data['store_from_err'] = 'Select store from';
+            }else{
+                $data['transfers'] = $this->receiptmodel->get_transfers($data['store_from']);
             }
+            if(empty($data['transfer_no'])){
+                $data['transfer_no_err'] = 'Select transfer no';
+            }
+        }        
+        
+        for ($i=0; $i < count($products); $i++) { 
+            array_push($data['items'],[
+                'product_id' => $product_ids[$i],
+                'product_name' => $products[$i],
+                'transfered_qty' => $transfered_qtys[$i],
+                'received_qty' => $received_qtys[$i],
+            ]);
         }
-
+    
         if(!empty($data['receipt_date_err']) || !empty($data['transfer_no_err'] || !empty($data['store_from_err']))){
             $this->view('receipts/new',$data);
             exit();
@@ -184,5 +186,68 @@ class Receipts extends Controller
         }
 
         redirect('receipts');
+    }
+
+    public function edit($id)
+    {
+        $receipt = $this->receiptmodel->get_receipt($id);
+        if(!$receipt){
+            $this->not_found('/receipts', 'The receipt you are trying to edit doesn\'t exist');
+            exit();
+        }
+
+        $data = [
+            'title' => 'Update receipt',
+            'stores' => $this->receiptmodel->get_transfering_stores(),
+            'transfers' => [],
+            'products' => $this->reusablemodel->get_products_by_store($_SESSION['store']),
+            'receipt_no' => $receipt->receipt_no,
+            'is_edit' => true,
+            'id' => $receipt->id,
+            'items' => [],
+            'receipt_date' => date('Y-m-d',strtotime($receipt->receipt_date)),
+            'store_from' => !empty($store_from) ? trim($store_from) : '',
+            'transfer_no' => $receipt->transfer_id,
+            'store_from_err' => '',
+            'receipt_date_err' => '',
+            'transfer_no_err' => '',
+            'errors' => []
+        ];
+
+        foreach($this->receiptmodel->get_receipt_items($id) as $receipt){
+            array_push($data['items'],[
+                'product_id' => $receipt->product_id,
+                'product_name' => $receipt->product_name,
+                'transfered_qty' => $receipt->transfered_qty,
+                'received_qty' => $receipt->received_qty,
+            ]);
+        }
+
+        $this->view('receipts/new',$data);
+    }
+
+    public function delete()
+    {
+        if($_SERVER['REQUEST_METHOD'] !== 'POST'){
+            flash('receipt_msg','Invalid request method', alert_type('error'));
+            redirect('receipts');
+            exit();
+        }
+
+        $id = filter_input(INPUT_POST,'id',FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+
+        if(empty($id)){
+            flash('receipt_msg','Unable to get selected receipt.', alert_type('error'));
+            redirect('receipts');
+            exit();
+        }
+
+        if(!$this->receiptmodel->delete($id)){
+            flash('receipt_msg','Cannot delete this receipt. Please try again later.', alert_type('error'));
+            redirect('receipts');
+            exit();
+        }
+
+        redirect('/receipts');
     }
 }
