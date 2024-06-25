@@ -171,4 +171,44 @@ class Transfer
                 WHERE t.header_id = ?';
         return resultset($this->db->dbh,$sql,[$id]);
     }
+
+    public function check_is_receipt($id)
+    {
+        return (int)getdbvalue($this->db->dbh,'SELECT COUNT(*) FROM receipts_headers WHERE transfer_id = ?',[$id]) > 0;
+    }
+
+    public function delete($id)
+    {
+        try {
+            
+            $this->db->dbh->beginTransaction();
+
+            $this->db->query('DELETE FROM transfers_details WHERE (header_id = :header_id)');
+            $this->db->bind(':header_id',$id);
+            $this->db->execute();
+
+            $this->db->query('DELETE FROM stock_movements WHERE (transaction_type = :type) AND (transaction_id = :id)');
+            $this->db->bind(':type','transfer');
+            $this->db->bind(':id',$id);
+            $this->db->execute();
+
+            $this->db->query('DELETE FROM transfers_headers WHERE (id = :id)');
+            $this->db->bind(':id',$id);
+            $this->db->execute();
+
+            if(!$this->db->dbh->commit()){
+                return false;
+            }
+            
+            return true;
+
+
+        } catch (\Exception $e) {
+            if($this->db->dbh->inTransaction()){
+                $this->db->dbh->rollback();
+            }
+            error_log($e->getMessage());
+            return false;
+        }
+    }
 }

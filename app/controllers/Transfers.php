@@ -150,4 +150,35 @@ class Transfers extends Controller
 
         $this->view('transfers/new',$data);
     }
+
+    public function delete()
+    {
+        if($_SERVER['REQUEST_METHOD'] !== 'POST'){
+            flash('transfer_msg','Invalid request method', alert_type('error'));
+            redirect('transfers');
+            exit();
+        }
+
+        $id = filter_input(INPUT_POST,'id',FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+
+        if(empty($id)){
+            flash('transfer_msg','Unable to get selected transfer.', alert_type('error'));
+            redirect('transfers');
+            exit();
+        }
+
+        if($this->transfermodel->check_is_receipt($id)){
+            flash('transfer_msg','Cannot delete transfer as its already received.', alert_type('error'));
+            redirect('transfers');
+            exit();
+        }
+
+        if(!$this->transfermodel->delete($id)){
+            flash('transfer_msg','Cannot delete this transfer. Please try again later.', alert_type('error'));
+            redirect('transfers');
+            exit();
+        }
+
+        redirect('/transfers');
+    }
 }
