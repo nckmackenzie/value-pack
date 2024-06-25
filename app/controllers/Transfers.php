@@ -120,7 +120,7 @@ class Transfers extends Controller
     {
         $transfer = $this->transfermodel->get_transfer($id);
         if(!$transfer){
-            $this->not_found('/products', 'The transfer you are trying to edit doesn\'t exist');
+            $this->not_found('/transfers', 'The transfer you are trying to edit doesn\'t exist');
             exit();
         }
         $data = [
