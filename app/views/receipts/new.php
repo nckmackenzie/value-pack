@@ -47,30 +47,32 @@
                         <span class="invalid-feedback"><?php echo $data['receipt_date_err'];?></span>
                     </div>
                 </div>
-                <div class="col-md-3">
-                    <div class="form-group">
-                        <label for="store_from">Store From</label>
-                        <select name="store_from" id="store_from" class="form-control mandatory <?php echo invalid_setter($data['store_from_err']);?>">
-                            <option value="" disabled selected>Select store from</option>
-                            <?php foreach($data['stores'] as $store) : ?>
-                                <option value="<?php echo $store->id;?>" <?php selectdCheck($data['store_from'],$store->id) ?>><?php echo strtoupper($store->store_name);?></option>
-                            <?php endforeach; ?>
-                        </select>
-                        <span class="invalid-feedback"><?php echo $data['store_from_err'];?></span>
+                <?php if(!$data['is_edit']) : ?>
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label for="store_from">Store From</label>
+                            <select name="store_from" id="store_from" class="form-control mandatory <?php echo invalid_setter($data['store_from_err']);?>">
+                                <option value="" disabled selected>Select store from</option>
+                                <?php foreach($data['stores'] as $store) : ?>
+                                    <option value="<?php echo $store->id;?>" <?php selectdCheck($data['store_from'],$store->id) ?>><?php echo strtoupper($store->store_name);?></option>
+                                <?php endforeach; ?>
+                            </select>
+                            <span class="invalid-feedback"><?php echo $data['store_from_err'];?></span>
+                        </div>
                     </div>
-                </div>
-                <div class="col-md-3">
-                    <div class="form-group">
-                        <label for="transfer_no">Transfer Reference</label>
-                        <select name="transfer_no" id="transfer_no" class="form-control mandatory <?php echo invalid_setter($data['transfer_no_err']);?>">
-                            <option value="" disabled selected>Select transfer</option>
-                            <?php foreach($data['transfers'] as $transfer) : ?>
-                                <option value="<?php echo $transfer->id;?>" <?php selectdCheck($data['transfer_no'],$transfer->id) ?>><?php echo $transfer->transfer_no;?></option>
-                            <?php endforeach; ?>
-                        </select>
-                        <span class="invalid-feedback"><?php echo $data['transfer_no_err'];?></span>
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label for="transfer_no">Transfer Reference</label>
+                            <select name="transfer_no" id="transfer_no" class="form-control mandatory <?php echo invalid_setter($data['transfer_no_err']);?>">
+                                <option value="" disabled selected>Select transfer</option>
+                                <?php foreach($data['transfers'] as $transfer) : ?>
+                                    <option value="<?php echo $transfer->id;?>" <?php selectdCheck($data['transfer_no'],$transfer->id) ?>><?php echo $transfer->transfer_no;?></option>
+                                <?php endforeach; ?>
+                            </select>
+                            <span class="invalid-feedback"><?php echo $data['transfer_no_err'];?></span>
+                        </div>
                     </div>
-                </div>
+                <?php endif; ?>
             </div>
             <hr/>
             <hr />
@@ -111,6 +113,6 @@
     </section><!-- /.content -->
 </div><!-- /.content-wrapper -->
 <?php require APPROOT . '/views/inc/footer.php'?>
-<script type="module" src="<?php echo URLROOT;?>/js/pages/receipts/receipt.js"></script>
+<script type="module" src="<?php echo URLROOT;?>/js/pages/receipts/receipt-v1.js"></script>
 </body>
 </html>  
