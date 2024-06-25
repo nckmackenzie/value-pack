@@ -46,8 +46,8 @@
                 </div>
               </td>
               <td class="flex items-center gap-2">
-                <?php action_buttons("edit","transfers",$transfer->id);?>
-                <?php action_buttons("delete","",$transfer->id);?>
+                  <?php action_buttons("edit","transfers",$transfer->id);?>
+                  <?php action_buttons("delete","",$transfer->id);?>
               </td>
             </tr>
           <?php endforeach;?>
@@ -57,6 +57,6 @@
     </section><!-- /.content -->
 </div><!-- /.content-wrapper -->
 <?php require APPROOT . '/views/inc/footer.php'?>
-<script type="module" src="<?php echo URLROOT;?>/js/pages/transfers/transfer.js"></script>
+<script type="module" src="<?php echo URLROOT;?>/js/pages/transfers/transfer-v1.js"></script>
 </body>
 </html>  
