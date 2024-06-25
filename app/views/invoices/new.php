@@ -88,7 +88,7 @@
                 <div class="col-md-6">
                     <div class="form-group">
                         <label for="product">Product</label>
-                        <select name="product" id="product" class="form-control">
+                        <select id="product" class="form-control">
                             <option value="" disabled selected>Select product</option>
                             <?php foreach($data['products'] as $product) : ?>
                                 <option value="<?php echo $product->id;?>"><?php echo strtoupper($product->product_name);?></option>
@@ -99,19 +99,19 @@
                 <div class="col-md-2">
                     <div class="form-group">
                         <label for="qty">Qty</label>
-                        <input type="number" name="qty" id="qty" class="form-control">
+                        <input type="number" id="qty" class="form-control">
                     </div>
                 </div>
                 <div class="col-md-2">
                     <div class="form-group">
                         <label for="rate">Rate</label>
-                        <input type="number" name="rate" id="rate" class="form-control">
+                        <input type="number" id="rate" class="form-control">
                     </div>
                 </div>
                 <div class="col-md-2">
                     <div class="form-group">
                         <label for="value">Value</label>
-                        <input type="text" name="value" id="value" class="form-control" readonly>
+                        <input type="text" id="value" class="form-control" readonly>
                     </div>
                 </div>
                 <div class="col-md-12 mb-2">
@@ -137,7 +137,7 @@
                             <?php foreach($data['items'] as $item) : ?>
                                 <tr>
                                     <td class="hidden"><input type="text" name="product_id[]" value="<?php echo $item['product_id'];?>"/></td>
-                                    <td class="capitalize"><input type="text" name="product[]" class="w-full" value="<?php echo $item['product_name'];?>"/></td>
+                                    <td class="capitalize"><input type="text" name="products[]" class="w-full" value="<?php echo $item['product_name'];?>"/></td>
                                     <td><input type="number" name="qty[]" value="<?php echo $item['qty'];?>" /></td>
                                     <td><input type="number" name="rate[]" value="<?php echo $item['rate'];?>" /></td>
                                     <td><input type="text" name="value[]" value="<?php echo $item['value'];?>" /></td>
@@ -168,6 +168,6 @@
     </section><!-- /.content -->
 </div><!-- /.content-wrapper -->
 <?php require APPROOT . '/views/inc/footer.php'?>
-<script type="module" src="<?php echo URLROOT;?>/js/pages/invoices/invoice.js"></script>
+<script type="module" src="<?php echo URLROOT;?>/js/pages/invoices/invoice-v1.js"></script>
 </body>
 </html>  

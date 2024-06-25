@@ -49,7 +49,7 @@
                 <?php action_buttons("edit","users",$user->id);?>
                 <?php if((bool)$user->active) : ?>
                   <a href="<?php echo URLROOT;?>/users/reset_password/<?php echo $user->id;?>" class='group'>
-                      <span class='text-sky-400 transition-colors font-medium text-xs group-hover:text-sky-300'>Reset Password</span>
+                      <span class='text-sky-400 transition-colors font-medium text-sm group-hover:text-sky-300'>Reset Password</span>
                   </a>
                 <?php endif; ?>
                 <?php action_buttons("delete","",$user->id);?>
