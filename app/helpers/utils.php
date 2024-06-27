@@ -190,3 +190,11 @@ function date_validator($validator_type,$date1,$date2 = ''){
             return false;
     }
 }
+
+function to_float($input) {
+    $cleanedInput = str_replace(',', '', $input);
+
+    $floatValue = (float)$cleanedInput;
+    
+    return $floatValue;
+}
