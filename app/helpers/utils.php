@@ -186,6 +186,8 @@ function date_validator($validator_type,$date1,$date2 = ''){
     switch ($validator_type) {
         case 'greater_than_today':
             return strtotime($date1) > strtotime(date('Y-m-d'));
+        case 'earlier_than_first':
+            return strtotime($date2) < strtotime($date1);
         default:
             return false;
     }
