@@ -75,5 +75,5 @@ function renderData(data) {
   addBlurEventListeners();
 }
 
-basicDatatable('paymentsDatatable', [{ width: '10%', targets: 5 }]);
+basicDatatable('paymentsDatatable', [{ width: '10%', targets: 4 }]);
 deleteButtonClick('paymentsDatatable', 'deleteModal', 'id');
