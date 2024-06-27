@@ -18,7 +18,7 @@ class Payments extends Controller
     {
         $data = [
             'title' => 'Payments',
-            'payments' => []
+            'payments' => $this->paymentmodel->get_paid_invoices()
         ];
         $this->view('payments/index',$data);
     }
