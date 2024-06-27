@@ -19,7 +19,7 @@
       </div>
     </section>
     <section class="content bg-white p-4">
-        <form action="<?php echo URLROOT;?>/payments/create_update" method="post">
+        <form action="<?php echo URLROOT;?>/payments/create" method="post">
             <div class="col-md-6 mx-auto">
                 <div class="alert"></div>
                 <?php flash('payment_msg');?>
