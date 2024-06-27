@@ -64,7 +64,7 @@ class Payments extends Controller
         echo json_encode(['success' => true, 'data' => $payments]);
     }
 
-    public function create_update()
+    public function create()
     {
         if($_SERVER['REQUEST_METHOD'] !== 'POST'){
             flash('payment_msg','Invalid request method.',alert_type('error'));
@@ -149,9 +149,127 @@ class Payments extends Controller
             exit();
         }
 
-        if(!$this->paymentmodel->create_update($data)){
+        if(!$this->paymentmodel->create($data)){
             array_push($data['errors'], "There was a problem creating payments. Try again later.");
             $this->view('payments/new',$data);
+            exit();
+        }
+
+        redirect('payments');
+    }
+
+    public function edit($id)
+    {
+        $payment = $this->paymentmodel->get_payment($id);
+        if(!$payment){
+            $this->not_found('/payments', 'The payment you are trying to edit doesn\'t exist');
+            exit();
+        }
+        $data = [
+            'title' => 'Update payment',
+            'customers' => $this->reusablemodel->get_customers(),
+            'id' => $payment->id,
+            'is_edit' => true,
+            'payment_date' => date('Y-m-d',strtotime($payment->payment_date)),
+            'customer' => $payment->customer_id,
+            'payment_method' => $payment->payment_method,
+            'payment_reference' => strtoupper($payment->payment_reference),
+            'payment' => $payment->payment,
+            'amount_due' => $payment->amount_due,
+            'invoice_id' => $payment->invoice_id,
+            'payment_id' => $payment->payment_id,
+            'payment_date_err' => '',
+            'amount_err' => '',
+            'customer_err' => '',
+            'payment_reference_err' => '',
+            'payment_err' => '',
+            'payment_method_err' => '',
+            'errors' => []
+        ];
+        $this->view('payments/edit',$data);
+    }
+
+    public function update()
+    {
+        if($_SERVER['REQUEST_METHOD'] !== 'POST'){
+            flash('payment_msg','Invalid request method.',alert_type('error'));
+            redirect('payments/new');
+            exit();
+        }
+
+        $payment_date = filter_input(INPUT_POST,'payment_date',FILTER_SANITIZE_SPECIAL_CHARS);
+        $customer = filter_input(INPUT_POST,'customer',FILTER_SANITIZE_SPECIAL_CHARS);
+        $payment_method = filter_input(INPUT_POST,'payment_method',FILTER_SANITIZE_SPECIAL_CHARS);
+        $payment_reference = filter_input(INPUT_POST,'payment_reference',FILTER_SANITIZE_SPECIAL_CHARS);        
+        $amount_due = filter_input(INPUT_POST,'amount_due',FILTER_SANITIZE_SPECIAL_CHARS);        
+        $payment = filter_input(INPUT_POST,'payment',FILTER_SANITIZE_SPECIAL_CHARS);
+        $id = filter_input(INPUT_POST,'id',FILTER_SANITIZE_SPECIAL_CHARS);
+        $invoice_id = filter_input(INPUT_POST,'invoice_id',FILTER_SANITIZE_SPECIAL_CHARS);
+        $payment_id = filter_input(INPUT_POST,'payment_id',FILTER_VALIDATE_INT, FILTER_FLAG_ALLOW_FRACTION);
+
+        $data = [
+            'title' => 'Update payment',
+            'customers' => $this->reusablemodel->get_customers(),
+            'id' => $id,
+            'is_edit' => true,
+            'payment_date' => !empty($payment_date) ? date('Y-m-d',strtotime($payment_date)) : '',
+            'customer' => !empty($customer) ? $customer : '',
+            'payment_method' => !empty($payment_method) ? $payment_method : '',
+            'payment_reference' => !empty($payment_reference) ? $payment_reference : '',
+            'payment' => !empty($payment) ? $payment : '',
+            'amount_due' => !empty($amount_due) ? $amount_due : '',
+            'invoice_id' => $invoice_id,
+            'payment_id' => $payment_id,
+            'payment_date_err' => '',
+            'amount_err' => '',
+            'customer_err' => '',
+            'payment_reference_err' => '',
+            'payment_method_err' => '',
+            'payment_err' => '',
+            'errors' => []
+        ];
+
+        if(empty($data['payment_date'])){
+            $data['payment_date_err'] = 'Select date';
+        }else{
+            $invoicedate = $this->paymentmodel->get_invoice_date($data['invoice_id']);
+            if(date_validator('earlier_than_first',$invoicedate,$data['payment_date'])){
+                $data['payment_date_err'] = 'Payment date cannot be earlier than invoice date.';
+            }
+        }
+        if(empty($data['customer'])){
+            $data['customer_err'] = 'Select customer';
+        }
+        if(empty($data['payment_method'])){
+            $data['payment_method_err'] = 'Select payment method.';
+        }
+        if(empty($data['payment_reference'])){
+            $data['payment_reference_err'] = 'Enter payment reference.';
+        }
+        if(empty($data['payment'])){
+            $data['payment_err'] = 'Enter payment.';
+        }else{
+            if(to_float($data['payment']) > to_float($data['amount_due'])){
+                $data['payment_err'] = 'Payment cannot be greater than amount due.';
+            }
+        }        
+
+        if(!empty($data['payment_date_err']) || !empty($data['customer_err']) || !empty($data['payment_method_err']) 
+            || !empty($data['payment_reference_err']) || !empty($data['payment_err'])){
+                
+            $this->view('payments/edit',$data);
+            exit();
+        }
+
+        if($this->paymentmodel->has_earlier_payments($data['invoice_id'],$data['payment_id'])){
+            array_push($data['errors'], "Cannot edit this payment as there are earlier payments for same invoice.");
+            $this->view('payments/edit',$data);
+            exit();
+        }
+
+        if(!$this->paymentmodel->update($data)){
+            array_push($data['errors'], "There was a problem updating payment. Try again later.");
+            $this->view('payments/edit',$data);
             exit();
         }
 
