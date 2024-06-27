@@ -135,4 +135,16 @@ class Payment
     {
         return (int)getdbvalue($this->db->dbh,'SELECT COUNT(*) FROM invoices_payments WHERE invoice_id = ? AND payment_id < ?',[$invoice_id,$payment_id]) > 0;
     }
+
+    public function delete($id){
+        $sql = 'DELETE FROM invoices_payments WHERE (id = :id)';
+        $this->db->query($sql);            
+        $this->db->bind(':id', $id);            
+              
+        if(!$this->db->execute()){
+            return false;
+        }
+        return true;
+    }
+
 }

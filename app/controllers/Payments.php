@@ -275,4 +275,41 @@ class Payments extends Controller
 
         redirect('payments');
     }
+
+    public function delete()
+    {
+        if($_SERVER['REQUEST_METHOD'] !== 'POST'){
+            flash('payment_msg','Invalid request method', alert_type('error'));
+            redirect('payments');
+            exit();
+        }
+
+        $id = filter_input(INPUT_POST,'id',FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+
+        if(empty($id)){
+            flash('payment_msg','Unable to get selected payment.', alert_type('error'));
+            redirect('payments');
+            exit();
+        }
+
+        $payment = $this->paymentmodel->get_payment($id);
+        if(!$payment){
+            $this->not_found('/payments', 'The payment you are trying to edit doesn\'t exist');
+            exit();
+        }
+
+        if($this->paymentmodel->has_earlier_payments($payment->invoice_id,$payment->payment_id)){
+            flash('payment_msg','Cannot delete this payment as there are earlier payments for same invoice.', alert_type('error'));
+            redirect('payments');
+            exit();
+        }
+
+        if(!$this->paymentmodel->delete($id)){
+            flash('payment_msg','Cannot delete this payment. Please try again later.', alert_type('error'));
+            redirect('payments');
+            exit();
+        }
+
+        redirect('/payments');
+    }
 }
