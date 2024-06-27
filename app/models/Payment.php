@@ -8,6 +8,23 @@ class Payment
         $this->db = new Database;
     }
 
+    public function get_paid_invoices()
+    {
+        $sql = "SELECT
+                    p.id,
+                    p.payment_date,
+                    i.invoice_no,
+                    c.customer_name,
+                    p.amount
+                FROM
+                    invoices_payments p join invoices_headers i on p.invoice_id = i.id
+                    join customers c on i.customer_id = c.id
+                ORDER BY
+                    payment_date DESC
+        ";
+        return resultset($this->db->dbh,$sql,[]);
+    }
+
     public function get_pending_invoices($customer)
     {
         $sql = "SELECT
