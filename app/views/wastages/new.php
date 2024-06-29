@@ -98,6 +98,9 @@
                     </div>
                 </div>
             </div>
+            <?php if(!empty($data['file_name']) && !is_null($data['file_name'])) : ?>
+                <a target="_blank" href="<?php echo URLROOT;?>/<?php echo $data['file_name'];?>" class="btn btn-info mb-3">View Attachment</a>
+            <?php endif; ?>
             <div class="row">
                 <div class="col-12">
                     <button type="submit" class="btn btn-default">Save</button>
