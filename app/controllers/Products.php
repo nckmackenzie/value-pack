@@ -62,11 +62,11 @@ class Products extends Controller
         
         $product_name = filter_input(INPUT_POST,'name', FILTER_SANITIZE_SPECIAL_CHARS);
         $product_code = filter_input(INPUT_POST,'code', FILTER_SANITIZE_SPECIAL_CHARS);
-        $unit = filter_input(INPUT_POST,'unit', FILTER_SANITIZE_NUMBER_INT);
+        $unit = filter_input(INPUT_POST,'unit', FILTER_SANITIZE_NUMBER_FLOAT);
         $buying_price = filter_input(INPUT_POST,'buying_price', FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION);
         $selling_price = filter_input(INPUT_POST,'selling_price', FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION);
         $description = filter_input(INPUT_POST,'description', FILTER_SANITIZE_SPECIAL_CHARS);
-        $restock_level = filter_input(INPUT_POST,'restock_level', FILTER_SANITIZE_NUMBER_INT, FILTER_FLAG_ALLOW_FRACTION);
+        $restock_level = filter_input(INPUT_POST,'restock_level', FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION);
         $active = filter_input(INPUT_POST,'active', FILTER_VALIDATE_BOOLEAN);
         $is_stock = filter_input(INPUT_POST,'is_stock', FILTER_VALIDATE_BOOLEAN);
         $is_edit = filter_input(INPUT_POST, 'is_edit', FILTER_VALIDATE_BOOLEAN);

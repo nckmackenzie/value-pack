@@ -42,7 +42,7 @@ class Conversions extends Controller
 
         $date = filter_input(INPUT_POST,'date',FILTER_SANITIZE_SPECIAL_CHARS);
         $final_product = filter_input(INPUT_POST,'final_product',FILTER_SANITIZE_SPECIAL_CHARS);
-        $converted_qty = filter_input(INPUT_POST,'converted_qty',FILTER_SANITIZE_NUMBER_INT,FILTER_FLAG_ALLOW_FRACTION);
+        $converted_qty = filter_input(INPUT_POST,'converted_qty',FILTER_SANITIZE_NUMBER_FLOAT,FILTER_FLAG_ALLOW_FRACTION);
         $product_ids = isset($_POST['product_id']) ? $_POST['product_id'] : [];
         $products = isset($_POST['product']) ? $_POST['product'] : [];
         $quantities = isset($_POST['qty']) ? $_POST['qty'] : [];
