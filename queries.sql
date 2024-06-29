@@ -104,4 +104,31 @@ BEGIN
 END$$
 DELIMITER ;
 
+-- 
+
+INSERT INTO `forms` (
+  `id`, `form_name`, `module`, `module_id`, 
+  `path`, `menu_order`
+) 
+VALUES 
+  (
+    NULL, 'wastages', 'transactions', 
+    '15', 'wastages', '35'
+  );
+
+CREATE TABLE `wastages` (
+  `id` VARCHAR(100) NOT NULL, 
+  `wastage_date` DATE NOT NULL, 
+  `product_id` VARCHAR(100) NOT NULL, 
+  `qty` DECIMAL(18, 2) NOT NULL, 
+  `rate` DECIMAL(18, 2) NOT NULL, 
+  `wastage_value` DECIMAL(18, 2) NOT NULL, 
+  `remarks` TEXT NULL, 
+  `image_url` TEXT NULL, 
+  `created_by` VARCHAR(100) NOT NULL, 
+  `created_on` DATE NOT NULL DEFAULT CURRENT_TIMESTAMP, 
+  PRIMARY KEY (`id`)
+) ENGINE = InnoDB;
+
+
 COMMIT;
