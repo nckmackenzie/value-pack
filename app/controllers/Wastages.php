@@ -18,7 +18,7 @@ class Wastages extends Controller
     {
         $data = [
             'title' => 'Wastages',
-            'wastages' =>  [] // $this->wastagemodel->get_wastages()
+            'wastages' => $this->wastagemodel->get_wastages()
         ];
         $this->view('wastages/index',$data);
  
@@ -38,6 +38,7 @@ class Wastages extends Controller
             'wastage_value' => '',
             'remarks' => '',
             'file' => null,
+            'file_name' => '',
             'product_err' => '',
             'date_err' => '',
             'qty_wasted_err' => '',
@@ -102,7 +103,7 @@ class Wastages extends Controller
                 $data['errors'][] = "Invalid file type. Only JPEG, PNG, and GIF images are allowed.";
             }
     
-            if (empty($data['errors'])) {
+            if (count($data['errors']) === 0) {
                 $target_dir = "uploads/";
                 $filename = cuid() . str_replace(' ', '_', $file["name"]);
                 $target_file = $target_dir . basename($filename);
@@ -146,5 +147,60 @@ class Wastages extends Controller
         }
 
         redirect('wastages');
+    }
+
+    public function edit($id)
+    {
+        $wastage = $this->wastagemodel->get_wastage($id);
+        if(!$wastage || empty($wastage)){
+           $this->not_found('/wastages', 'The wastage you are trying to edit doesn\'t exist');
+           exit();
+        }
+        $data = [
+            'title' => 'Update wastage',
+            'products' => $this->reusablemodel->get_products_by_store($_SESSION['store']),
+            'id' => $wastage->id,
+            'is_edit' => true,
+            'product' => $wastage->product_id,
+            'date' => date('Y-m-d',strtotime($wastage->wastage_date)),
+            'qty_wasted' => $wastage->qty,
+            'cost' => $wastage->rate,
+            'wastage_value' => $wastage->qty * $wastage->rate,
+            'remarks' => $wastage->remarks,
+            'file' => null,
+            'file_name' => $wastage->image_url,
+            'product_err' => '',
+            'date_err' => '',
+            'qty_wasted_err' => '',
+            'cost_err' => '',
+            'remarks_err' => '',
+            'errors' => []
+        ];
+        $this->view('wastages/new',$data);
+    }
+
+    public function delete()
+    {
+        if($_SERVER['REQUEST_METHOD'] !== 'POST'){
+            flash('wastage_msg','Invalid request method', alert_type('error'));
+            redirect('wastages');
+            exit();
+        }
+
+        $id = filter_input(INPUT_POST,'id',FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+
+        if(empty($id)){
+            flash('wastage_msg','Unable to get selected wastage.', alert_type('error'));
+            redirect('wastages');
+            exit();
+        }
+        
+        if(!$this->wastagemodel->delete($id)){
+            flash('wastage_msg','Cannot delete this wastage. Please try again later.', alert_type('error'));
+            redirect('wastages');
+            exit();
+        }
+
+        redirect('/wastages');
     }
 }
