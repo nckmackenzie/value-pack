@@ -37,14 +37,14 @@
         <tbody>
           <?php foreach($data['wastages'] as $wastage) : ?>
             <tr>
-              <!-- <td><?php echo date('d-m-Y',strtotime($wastage->wastage_date));?></td>
-              <td class="text-left"><?php echo $wastage->invoice_no;?></td>
-              <td class="uppercase"><?php echo $wastage->customer_name;?></td>
-              <td class="text-left"><div class="capsule capsule-info"><?php echo number_format($wastage->amount,2);?></div></td>
+              <td><?php echo date('d-m-Y',strtotime($wastage->wastage_date));?></td>
+              <td class="text-left uppercase"><?php echo $wastage->product_name;?></td>
+              <td><?php echo $wastage->qty;?></td>
+              <td class="text-left"><div class="capsule capsule-info"><?php echo number_format($wastage->wastage_value,2);?></div></td>
               <td class="flex items-center gap-2">
                 <?php action_buttons("edit","wastages",$wastage->id);?>
                 <?php action_buttons("delete","",$wastage->id);?>
-              </td>  -->
+              </td> 
             </tr>
           <?php endforeach;?>
         </tbody>
