@@ -39,6 +39,7 @@ class Wastages extends Controller
             'remarks' => '',
             'file' => null,
             'file_name' => '',
+            'old_file' => '',
             'product_err' => '',
             'date_err' => '',
             'qty_wasted_err' => '',
@@ -62,92 +63,94 @@ class Wastages extends Controller
         $qty_wasted = filter_input(INPUT_POST, 'qty_wasted', FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION);
         $cost = filter_input(INPUT_POST, 'cost', FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION);
         $remarks = filter_input(INPUT_POST, 'remarks', FILTER_SANITIZE_SPECIAL_CHARS);
+        $old_file = filter_input(INPUT_POST, 'old_file', FILTER_SANITIZE_SPECIAL_CHARS);
         // $file = $_FILES['file'];
         $id = filter_input(INPUT_POST, 'id', FILTER_SANITIZE_SPECIAL_CHARS);
         $is_edit = filter_input(INPUT_POST,'is_edit',FILTER_VALIDATE_BOOLEAN);
 
-        echo $qty_wasted;
-        // $data = [
-        //     'title' => $is_edit ? 'Update wastage' : 'Add new wastage',
-        //     'id' => !$is_edit ? cuid() : $id,
-        //     'is_edit' => $is_edit,
-        //     'products' => $this->reusablemodel->get_products_by_store($_SESSION['store']),
-        //     'product' => !empty($product) ? $product : '',
-        //     'date' => !empty($date) ? $date : '',
-        //     'qty_wasted' => !empty($qty_wasted) ? $qty_wasted : '',
-        //     'cost' => !empty($cost) ? $cost : '',
-        //     'wastage_value' => !empty($qty_wasted) && !empty($cost) ? $qty_wasted * $cost : '',
-        //     'remarks' => !empty($remarks) ? $remarks : '',
-        //     'file' =>  null,
-        //     'file_name' => '',
-        //     'product_err' => '',
-        //     'date_err' => '',
-        //     'qty_wasted_err' => '',
-        //     'cost_err' => '',
-        //     'remarks_err' => '',
-        //     'errors' => []
-        // ];
-
-        // $allowed_types = ['image/jpeg', 'image/png', 'image/gif'];
-        // $max_size = 4 * 1024 * 1024; 
-
-        // if (isset($_FILES['file']) && !empty($_FILES['file']['name'])) {
-        //     $file = $_FILES['file'];
-        //     $allowed_types = ['image/jpeg', 'image/png', 'image/gif'];
-        //     $max_size = 4 * 1024 * 1024; // 4MB
-    
-        //     if ($file['size'] > $max_size) {
-        //         $data['errors'][] = "File size exceeds the maximum allowed size (4 MB)";
-        //     }
-    
-        //     if (!in_array($file['type'], $allowed_types)) {
-        //         $data['errors'][] = "Invalid file type. Only JPEG, PNG, and GIF images are allowed.";
-        //     }
-    
-        //     if (count($data['errors']) === 0) {
-        //         $target_dir = "uploads/";
-        //         $filename = cuid() . str_replace(' ', '_', $file["name"]);
-        //         $target_file = $target_dir . basename($filename);
-    
-        //         if (move_uploaded_file($file["tmp_name"], $target_file)) {
-        //             $data['file_name'] = $target_file;
-        //         } else {
-        //             $data['errors'][] = "Failed to upload file";
-        //         }
-        //     }
-        // }
-
-        // if(empty($data['product'])){
-        //     $data['product_err'] = 'Select product';
-        // }
-        // if(empty($data['date'])){
-        //     $data['date_err'] = 'Select date';
-        // }
-        // if(empty($data['qty_wasted'])){
-        //     $data['qty_wasted_err'] = 'Enter quantity wasted';
-        // }
-        // if(empty($data['cost'])){
-        //     $data['cost_err'] = 'Provide rate for item';
-        // }
-        // if(empty($data['remarks'])){
-        //     $data['remarks_err'] = 'Enter remarks on wastage';
-        // }
         
+        $data = [
+            'title' => $is_edit ? 'Update wastage' : 'Add new wastage',
+            'id' => !$is_edit ? cuid() : $id,
+            'is_edit' => $is_edit,
+            'products' => $this->reusablemodel->get_products_by_store($_SESSION['store']),
+            'product' => !empty($product) ? $product : '',
+            'date' => !empty($date) ? $date : '',
+            'qty_wasted' => !empty($qty_wasted) ? $qty_wasted : '',
+            'cost' => !empty($cost) ? $cost : '',
+            'wastage_value' => !empty($qty_wasted) && !empty($cost) ? $qty_wasted * $cost : '',
+            'remarks' => !empty($remarks) ? $remarks : '',
+            'old_file' => !empty($old_file) ? $old_file : '',
+            'file' =>  null,
+            'file_name' => '',
+            'product_err' => '',
+            'date_err' => '',
+            'qty_wasted_err' => '',
+            'cost_err' => '',
+            'remarks_err' => '',
+            'errors' => []
+        ];
 
-        // if(!empty($data['date_err']) || !empty($data['qty_wasted_err']) || !empty($data['cost_err']) 
-        //    || !empty($data['remarks_err']) || count($data['errors']) > 0){
+        $allowed_types = ['image/jpeg', 'image/png', 'image/gif'];
+        $max_size = 4 * 1024 * 1024; 
+
+        if (isset($_FILES['file']) && !empty($_FILES['file']['name'])) {
+            $file = $_FILES['file'];
+            $allowed_types = ['image/jpeg', 'image/png', 'image/gif'];
+            $max_size = 4 * 1024 * 1024; // 4MB
+    
+            if ($file['size'] > $max_size) {
+                $data['errors'][] = "File size exceeds the maximum allowed size (4 MB)";
+            }
+    
+            if (!in_array($file['type'], $allowed_types)) {
+                $data['errors'][] = "Invalid file type. Only JPEG, PNG, and GIF images are allowed.";
+            }
+    
+            if (count($data['errors']) === 0) {
+                $target_dir = "uploads/";
+                $filename = cuid() . str_replace(' ', '_', $file["name"]);
+                $target_file = $target_dir . basename($filename);
+    
+                if (move_uploaded_file($file["tmp_name"], $target_file)) {
+                    $data['file_name'] = $target_file;
+                } else {
+                    $data['errors'][] = "Failed to upload file";
+                }
+            }
+        }
+
+        if(empty($data['product'])){
+            $data['product_err'] = 'Select product';
+        }
+        if(empty($data['date'])){
+            $data['date_err'] = 'Select date';
+        }
+        if(empty($data['qty_wasted'])){
+            $data['qty_wasted_err'] = 'Enter quantity wasted';
+        }
+        if(empty($data['cost'])){
+            $data['cost_err'] = 'Provide rate for item';
+        }
+        if(empty($data['remarks'])){
+            $data['remarks_err'] = 'Enter remarks on wastage';
+        }
+        
+        
+        if(!empty($data['date_err']) || !empty($data['qty_wasted_err']) || !empty($data['cost_err']) 
+           || !empty($data['remarks_err']) || count($data['errors']) > 0){
            
-        //    $this->view('wastages/new', $data);
-        //    exit();
-        // }
+           $this->view('wastages/new', $data);
+           exit();
+        }
 
-        // if(!$this->wastagemodel->create_update($data)){
-        //     $data['errors'][] = 'Something went wrong while performing this action. Contact support.';
-        //     $this->view('wastages/new', $data);
-        //     exit();
-        // }
+        if(!$this->wastagemodel->create_update($data)){
+            $data['errors'][] = 'Something went wrong while performing this action. Contact support.';
+            $this->view('wastages/new', $data);
+            exit();
+        }
 
-        // redirect('wastages');
+        redirect('wastages');
     }
 
     public function edit($id)
@@ -170,6 +173,7 @@ class Wastages extends Controller
             'remarks' => $wastage->remarks,
             'file' => null,
             'file_name' => $wastage->image_url,
+            'old_file' => $wastage->image_url,
             'product_err' => '',
             'date_err' => '',
             'qty_wasted_err' => '',

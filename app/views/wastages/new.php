@@ -105,6 +105,7 @@
                 <div class="col-12">
                     <button type="submit" class="btn btn-default">Save</button>
                     <input type="hidden" name="id" value="<?php echo $data['id'];?>">
+                    <input type="hidden" name="old_file" value="<?php echo $data['old_file'];?>">
                     <input type="hidden" name="is_edit" value="<?php echo $data['is_edit'];?>">
                 </div>
             </div>

@@ -95,7 +95,7 @@ class Wastage
             $this->db->bind(':rate', $data['cost']);
             $this->db->bind(':wastage_value', $data['wastage_value']);
             $this->db->bind(':remarks', $data['remarks']);
-            $this->db->bind(':image_url', !empty($data['file_name']) ? $data['file_name'] : null);
+            $this->db->bind(':image_url', !empty($data['file_name']) ? $data['file_name'] : (!empty($data['old_file']) ? $data['old_file'] : null));
             $this->db->bind(':creator', $_SESSION['user_id']);
             $this->db->bind(':id',$data['id']);
             $this->db->execute();
