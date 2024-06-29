@@ -9,14 +9,33 @@ class Wastage
         $this->db = new Database;
     }
 
+    public function get_wastages()
+    {
+        $sql = "SELECT 
+                    w.id,
+                    wastage_date,
+                    p.product_name,
+                    w.qty,
+                    w.wastage_value,
+                    w.image_url
+                FROM wastages w
+                JOIN products p
+                ON w.product_id = p.id
+                WHERE
+                    w.store_id = ?
+                ORDER BY w.id DESC
+                ";
+        return resultset($this->db->dbh, $sql, [$_SESSION['store']]);
+    }
+
     function save($data)
     {
         try {
 
             $this->db->dbh->beginTransaction();
 
-            $sql = "INSERT INTO wastages (id, wastage_date, product_id, qty, rate, wastage_value, remarks, image_url, created_by)
-                    VALUES (:id, :wastage_date, :product_id, :qty, :rate, :wastage_value, :remarks, :image_url, :creator) ";
+            $sql = "INSERT INTO wastages (id, wastage_date, product_id, qty, rate, wastage_value, remarks, image_url, store_id, created_by)
+                    VALUES (:id, :wastage_date, :product_id, :qty, :rate, :wastage_value, :remarks, :image_url, :store_id, :creator) ";
             
             $this->db->query($sql);
             $this->db->bind(':id',$data['id']);
@@ -27,6 +46,7 @@ class Wastage
             $this->db->bind(':wastage_value', $data['wastage_value']);
             $this->db->bind(':remarks', $data['remarks']);
             $this->db->bind(':image_url', !empty($data['file_name']) ? $data['file_name'] : null);
+            $this->db->bind(':store_id', $_SESSION['store']);
             $this->db->bind(':creator', $_SESSION['user_id']);
             $this->db->execute();
 
