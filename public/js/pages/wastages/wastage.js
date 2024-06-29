@@ -1,7 +1,7 @@
 import { basicDatatable, deleteButtonClick } from '../../utils/datatable.js';
 import { numberWithCommas } from '../../utils/formatters.js';
 
-basicDatatable('wastagesDatatable', [{ width: '10%', targets: 4 }]);
+basicDatatable('wastagesDatatable', [{ width: '10%', targets: 2 }]);
 deleteButtonClick('wastagesDatatable', 'deleteModal', 'id');
 
 const qtyInput = document.getElementById('qty_wasted');
