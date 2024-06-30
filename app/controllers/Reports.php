@@ -54,4 +54,39 @@
 
         echo json_encode(['success' => true, 'message' => null, 'data' => $stocks]);
     }
+
+    public function sales()
+    {
+        $data = [
+            'title' => 'Stock Report',
+        ];
+        $this->view('reports/salesreport', $data);
+    }
+
+    public function sales_report()
+    {
+        if($_SERVER['REQUEST_METHOD'] !== 'GET'){
+            echo json_encode(['success' => false, 'message' => 'Invalid request method.']);
+            exit();
+        }
+
+        $start_date = filter_input(INPUT_GET, 'start', FILTER_SANITIZE_SPECIAL_CHARS);
+        $end_date = filter_input(INPUT_GET, 'end', FILTER_SANITIZE_SPECIAL_CHARS);
+        $report_type = filter_input(INPUT_GET,'report_type', FILTER_SANITIZE_SPECIAL_CHARS);
+
+        $data = [
+            'start_date' => !empty($start_date) ? date('Y-m-d',strtotime($start_date)) : '',
+            'end_date' => !empty($end_date) ? date('Y-m-d',strtotime($end_date)) : '',            
+            'report_type' => !empty($report_type) ? $report_type : '',
+        ];
+
+        if(date_validator('earlier_than_first', $data['start_date'], $data['end_date'])){
+            echo json_encode(['success' => false, 'message' => 'Start date cannot be after end date.']);
+            exit();
+        }
+
+        $sales = $this->reportmodel->get_sales_report($data);
+
+        echo json_encode(['success' => true, 'message' => null, 'data' => $sales]);
+    }
  }
