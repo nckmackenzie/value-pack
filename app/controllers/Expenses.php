@@ -95,4 +95,54 @@ class Expenses extends Controller
 
         redirect('expenses');
     }
+
+    public function edit($id)
+    {
+        $expense = $this->expensemodel->get_expense($id);
+        if(!$expense || empty($expense)){
+            $this->not_found('/expenses', 'The expense you are trying to edit doesn\'t exist');
+            exit();
+        }
+
+        $data = [
+            'title' => 'Update Expense',
+            'accounts' => $this->reusablemodel->get_expense_accounts(),
+            'id' => $expense->id,
+            'is_edit' => true,
+            'amount' => $expense->amount,
+            'remarks' => $expense->remarks,
+            'expense_date' => date('Y-m-d', strtotime($expense->expense_date)),
+            'account_id' => $expense->account_id,
+            'amount_err' => '',
+            'account_id_err' => '',
+            'expense_date_err' => '',
+            'errors' => []
+        ];
+        $this->view('expenses/new',$data);
+    }
+
+    public function delete()
+    {
+        if($_SERVER['REQUEST_METHOD'] !== 'POST'){
+            flash('expense_msg','Invalid request method', alert_type('error'));
+            redirect('expenses');
+            exit();
+        }
+
+        $id = filter_input(INPUT_POST,'id',FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+
+        if(empty($id)){
+            flash('expense_msg','Unable to get selected expense.', alert_type('error'));
+            redirect('expenses');
+            exit();
+        }
+
+        if(!$this->expensemodel->delete($id)){
+            flash('expense_msg','Cannot delete this expense. Please try again later.', alert_type('error'));
+            redirect('expenses');
+            exit();
+        }
+
+        redirect('/expenses');
+    }
 }

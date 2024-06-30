@@ -58,4 +58,21 @@ class Expense
             return false;
         }
     }
+
+    public function get_expense($id)
+    {
+        return singleset($this->db->dbh, 'SELECT * FROM expenses WHERE id = ?', [$id]);
+    }
+
+    public function delete($id)
+    {
+               
+        $this->db->query('DELETE FROM expenses WHERE id = :id');
+        $this->db->bind(':id', $id);        
+        if($this->db->execute()){
+            return true;
+        }else{
+            return false;
+        }
+    }
 }
