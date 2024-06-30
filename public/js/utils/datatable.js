@@ -20,13 +20,13 @@ export function deleteButtonClick(datatableId, modalId, inputId) {
   });
 }
 
-export const reportDatatable = table => {
+export const reportDatatable = (table, columnDefs) => {
   new DataTable(`#${table}`, {
     layout: {
       topStart: {
         buttons: [
           {
-            extend: 'copyHtml5',
+            extend: 'print',
             exportOptions: {
               columns: [0, ':visible'],
             },
@@ -40,11 +40,12 @@ export const reportDatatable = table => {
           {
             extend: 'pdfHtml5',
             exportOptions: {
-              columns: [0, 1, 2, 5],
+              columns: [0, ':visible'],
             },
           },
         ],
       },
     },
+    columnDefs,
   });
 };
