@@ -50,4 +50,19 @@ class Report
         
         return resultset($this->db->dbh,$sql,[$data['start_date'],$data['end_date'],$_SESSION['store']]);
     }
+
+    public function get_pending_invoices()
+    {
+        $sql = "SELECT
+                    h.invoice_date,
+                    h.invoice_no,
+                    c.customer_name,
+                    h.inclusive_amount as invoice_amount,
+                    fn_get_invoice_balance(h.id) as balance
+                FROM invoices_headers h join customers c on h.customer_id = c.id
+                HAVING balance > 0
+                ORDER BY h.invoice_date;
+            ";
+        return resultset($this->db->dbh,$sql,[]);
+    }
 }

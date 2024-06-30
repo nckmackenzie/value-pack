@@ -89,4 +89,10 @@
 
         echo json_encode(['success' => true, 'message' => null, 'data' => $sales]);
     }
+
+    public function pendinginvoices()
+    {
+        $data = ['title' => 'Pending Invoices','invoices' => $this->reportmodel->get_pending_invoices()];
+        $this->view('reports/pendinginvoices', $data);
+    }
  }
