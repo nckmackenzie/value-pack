@@ -54,4 +54,8 @@ class Reusable
         return resultset($this->db->dbh,'SELECT id,customer_name from customers order by customer_name;',[]);
     }
 
+    public function get_expense_accounts()
+    {
+        return resultset($this->db->dbh,'SELECT id,account_name from expense_accounts WHERE active = 1 order by account_name;',[]);
+    }
 }
