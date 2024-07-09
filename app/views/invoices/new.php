@@ -99,13 +99,13 @@
                 <div class="col-md-2">
                     <div class="form-group">
                         <label for="qty">Qty</label>
-                        <input type="number" id="qty" class="form-control">
+                        <input type="text" id="qty" class="form-control">
                     </div>
                 </div>
                 <div class="col-md-2">
                     <div class="form-group">
                         <label for="rate">Rate</label>
-                        <input type="number" id="rate" class="form-control">
+                        <input type="text" id="rate" class="form-control">
                     </div>
                 </div>
                 <div class="col-md-2">
