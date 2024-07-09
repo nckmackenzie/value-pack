@@ -96,7 +96,7 @@ class Wastages extends Controller
 
         if (isset($_FILES['file']) && !empty($_FILES['file']['name'])) {
             $file = $_FILES['file'];
-            $allowed_types = ['image/jpeg', 'image/png', 'image/gif'];
+            $allowed_types = ['image/jpeg', 'image/png', 'image/gif','image/jpg'];
             $max_size = 4 * 1024 * 1024; // 4MB
     
             if ($file['size'] > $max_size) {
