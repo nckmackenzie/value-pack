@@ -1,26 +1,26 @@
 <?php require APPROOT . '/views/inc/header.php';?>
 <?php require APPROOT . '/views/inc/top-nav.php';?>
 <?php require APPROOT . '/views/inc/side-nav.php';?>
-  <div class="content-wrapper px-4">
-    <section class="content-header px-0">
+  <div class="px-4 content-wrapper">
+    <section class="px-0 content-header">
       <div class="container-fluid">
-        <div class="row mb-2">
+        <div class="mb-2 row">
           <div class="col-sm-6">
             <h1><?php echo $data['title'];?></h1>
           </div>
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
-              <li class="breadcrumb-item text-sm">Transactions</li>
-              <li class="breadcrumb-item text-sm"><a href="<?php echo URLROOT;?>/purchases">Purchases</a></li>
-              <li class="breadcrumb-item text-sm active"><?php echo $data['title'];?></li>
+              <li class="text-sm breadcrumb-item">Transactions</li>
+              <li class="text-sm breadcrumb-item"><a href="<?php echo URLROOT;?>/purchases">Purchases</a></li>
+              <li class="text-sm breadcrumb-item active"><?php echo $data['title'];?></li>
             </ol>
           </div>
         </div>
       </div>
     </section>
-    <section class="content bg-white py-1">
+    <section class="py-1 bg-white content">
         <form action="<?php echo URLROOT;?>/purchases/create_update" method="post">
-            <div class="col-md-6 mx-auto">
+            <div class="mx-auto col-md-6">
                 <?php flash('purchase_msg');?>
                 <?php if(!is_null($data['error'])) : ?>
                     <div class="alert custom-destructive"><?php echo $data['error'];?></div>
@@ -92,7 +92,7 @@
                 </div>
             </div>
             <hr/>
-            <div class="row mt-1">
+            <div class="mt-1 row">
                 <div class="col-md-6">
                     <div class="form-group">
                         <label for="product">Product</label>
@@ -107,13 +107,13 @@
                 <div class="col-md-2">
                     <div class="form-group">
                         <label for="qty">Qty</label>
-                        <input type="number" id="qty" class="form-control">
+                        <input type="text" id="qty" class="form-control">
                     </div>
                 </div>
                 <div class="col-md-2">
                     <div class="form-group">
                         <label for="rate">Rate</label>
-                        <input type="number" id="rate" class="form-control">
+                        <input type="text" id="rate" class="form-control">
                     </div>
                 </div>
                 <div class="col-md-2">
@@ -122,7 +122,7 @@
                         <input type="text" id="value" class="form-control" readonly>
                     </div>
                 </div>
-                <div class="col-md-12 mb-2">
+                <div class="mb-2 col-md-12">
                     <button type="button" class="btn btn-success" id="add">Add</button>
                 </div>
             </div>
@@ -149,7 +149,7 @@
                                     <td><input type="number" name="qty[]" value="<?php echo $item['qty'];?>" /></td>
                                     <td><input type="number" name="rate[]" value="<?php echo $item['rate'];?>" /></td>
                                     <td><input type="text" name="value[]" value="<?php echo $item['value'];?>" /></td>
-                                    <td><button type="button" class="outline-none border-none text-rose-400 focus:outline-0">Remove</button></td>
+                                    <td><button type="button" class="border-none outline-none text-rose-400 focus:outline-0">Remove</button></td>
                                 </tr>
                             <?php endforeach; ?>
                         </tbody>     
@@ -176,6 +176,6 @@
     </section><!-- /.content -->
 </div><!-- /.content-wrapper -->
 <?php require APPROOT . '/views/inc/footer.php'?>
-<script type="module" src="<?php echo URLROOT;?>/js/pages/purchases/purchase.js"></script>
+<script type="module" src="<?php echo URLROOT;?>/js/pages/purchases/purchase-v1.js"></script>
 </body>
 </html>  
