@@ -1,6 +1,5 @@
 import { getRequest } from '../../utils/ajax.js';
 import { basicDatatable, deleteButtonClick } from '../../utils/datatable.js';
-import { numberWithCommas } from '../../utils/formatters.js';
 import { getSelectedText } from '../../utils/helpers.js';
 import { HOST_URL } from '../../utils/host.js';
 
@@ -77,14 +76,17 @@ function updateTable() {
   tbody.innerHTML = itemsMarkup;
 
   const total = items
-    .reduce((acc, item) => acc + item.value, 0)
+    .reduce((acc, item) => acc + Number(item.value), 0)
     .toString()
     .replace(/\B(?=(\d{3})+(?!\d))/g, ',');
-  totalInput.value = total;
+  totalInput.value = numberFormatter(total);
 }
 
 function getTotal(qty, rate) {
-  return numberWithCommas(qty * rate);
+  const summation = Number(qty) * Number(rate);
+  return new Intl.NumberFormat('en-KE', { maximumFractionDigits: 2 }).format(
+    Number(summation)
+  );
 }
 
 rateInput?.addEventListener('blur', e => {
@@ -130,7 +132,7 @@ addButton?.addEventListener('click', () => {
     productName: getSelectedText(productSelect),
     qty: qtyInput.value,
     rate: rateInput.value,
-    value: +qtyInput.value * +rateInput.value,
+    value: (+qtyInput.value * +rateInput.value).toFixed(2),
   };
   items.push(newItem);
   updateTable();
@@ -149,3 +151,9 @@ table?.addEventListener('click', e => {
 
 basicDatatable('purchasesDatatable', [{ width: '10%', targets: 4 }]);
 deleteButtonClick('purchasesDatatable', 'deleteModal', 'id');
+
+function numberFormatter(number) {
+  return new Intl.NumberFormat('en-KE', { maximumFractionDigits: 2 }).format(
+    Number(number)
+  );
+}
